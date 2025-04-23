@@ -136,6 +136,8 @@ allocate(Allocation):-
     append(Allocation, FlatAllocation),
     domain(FlatAllocation, 0, 1),
 
+    ensure_available(Allocation),
+
     labeling([], FlatAllocation).
 
 % constraint_num_cols(+Matrix, +Num)
@@ -143,3 +145,21 @@ constraint_num_cols([], _).
 constraint_num_cols([Row|Rest], Num) :-
     length(Row, Num),
     constraint_num_cols(Rest, Num).
+
+% ensure_available(+Allocation)
+ensure_available(Allocation) :-
+    build_availability_matrix(AvailabilityMatrix),
+    ensure_available_rows(Allocation, AvailabilityMatrix).
+
+% ensure_available_rows(+Allocation, +AvailabilityMatrix)
+ensure_available_rows([], []).
+ensure_available_rows([AllocationRow|RestAllocations], [AvailabilityRow|RestAvailabilities]) :-
+    ensure_available_row(AllocationRow, AvailabilityRow),
+    ensure_available_rows(RestAllocations, RestAvailabilities).
+    
+% ensure_available_row(+AllocationRow, +AvailabilityRow)
+ensure_available_row([], []).
+ensure_available_row([Allocation|RestAllocations], [Availability|RestAvailabilities]) :-
+    Allocation #=< Availability,
+    ensure_available_row(RestAllocations, RestAvailabilities).
+
