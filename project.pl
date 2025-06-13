@@ -3,14 +3,15 @@
 
 % ############## Test Data ##############
 
-% staff(name, experience, department)
-staff(alice, 1, logistics).
-staff(john, 0, logistics).
-staff(jane, 1, program).
+% staff(+name, +experience, +skills)
+% experience is an integer value [1, 5], skills is a list of skills
+staff(alice, 3, [logistics]).
+staff(john, 1, [logistics]).
+staff(jane, 2, [program, cocktails]).
 
-% activity(slug, min_staff, start_time, duration, department)
-activity(coffee_break, 2, 10.5, 2, logistics).
-activity(workshop_1, 1, 9, 2, program).
+% activity(slug, min_staff, start_time, duration, skills)
+activity(coffee_break, 2, 10.5, 2, [logistics, cocktails]).
+activity(workshop_1, 1, 9, 2, [program]).
 
 % available(staffName, activitySlug)
 available(alice, coffee_break).
@@ -18,14 +19,14 @@ available(alice, workshop_1).
 available(john, coffee_break).
 available(jane, workshop_1).
 
-% preference(staffName, activitySlug, preference) -> [0, 1] float values
-% Ommitted preferences defaults to 0
-preference(alice, coffee_break, 0.5).
-preference(alice, workshop_1, 0.7).
-preference(john, coffee_break, 0.1).
-preference(john, workshop_1, 0.0).
-preference(jane, coffee_break, 0.35).
-preference(jane, workshop_1, 1.0).
+% preference(staffName, activitySlug, preference) -> [0, 5] integer values
+% Ommitted preferences defaults to 3
+preference(alice, coffee_break, 3).
+preference(alice, workshop_1, 4).
+preference(john, coffee_break, 1).
+preference(john, workshop_1, 0).
+preference(jane, coffee_break, 2).
+preference(jane, workshop_1, 5).
 
 % availability([staff x activity]) -> 0 unavailable, 1 available
 /* availability([
@@ -34,22 +35,22 @@ preference(jane, workshop_1, 1.0).
     [0, 1]   % Staff 3 is only available for activity 2
 ]). */
 
-% preferences([staff x activity]) -> [0, 1] float values for preference
+% preferences([staff x activity]) -> [0, 5] integer values for preference
 % preferences([
-%     [0.5, 0.7],  
-%     [0.1, 0],  
-%     [0.35, 1]
+%     [3, 4],  
+%     [1, 0],  
+%     [2, 5]
 % ]).
 
 % ############## Utils ##############
 
 % get_staff_list(-StaffList)
 get_staff_list(StaffList) :-
-    findall(staff(Name, Exp, Dept), staff(Name, Exp, Dept), StaffList).
+    findall(staff(Name, Exp, Skills), staff(Name, Exp, Skills), StaffList).
 
 % get_activity_list(-ActivityList)
 get_activity_list(ActivityList) :-
-    findall(activity(Slug, MinStaff, Start, Dur, Dept), activity(Slug, MinStaff, Start, Dur, Dept), ActivityList).
+    findall(activity(Slug, MinStaff, Start, Dur, Skills), activity(Slug, MinStaff, Start, Dur, Skills), ActivityList).
 
 % get_staff_num(-Num)
 get_staff_num(Num) :-
@@ -61,15 +62,25 @@ get_activity_num(Num) :-
     get_activity_list(ActivityList),
     length(ActivityList, Num).
 
-% index_to_staff(?Index, ?Name)
-index_to_staff(Index, Name) :-
+% index_to_staff_name(?Index, ?Name)
+index_to_staff_name(Index, Name) :-
     get_staff_list(StaffList),
-    nth0(Index, StaffList, staff(Name, _, _)).
+    nth1(Index, StaffList, staff(Name, _, _)).
 
-% index_to_activity(?Index, ?Slug)
-index_to_activity(Index, Slug) :-
+% index_to_staff(?Index, ?Staff)
+index_to_staff(Index, Staff) :-
+    get_staff_list(StaffList),
+    nth1(Index, StaffList, Staff).
+
+% index_to_activity_slug(?Index, ?Slug)
+index_to_activity_slug(Index, Slug) :-
     get_activity_list(ActivityList),
-    nth0(Index, ActivityList, activity(Slug, _, _, _, _)).
+    nth1(Index, ActivityList, activity(Slug, _, _, _, _)).
+
+% index_to_activity(?Index, ?Activity)
+index_to_activity(Index, Activity) :-
+    get_activity_list(ActivityList),
+    nth1(Index, ActivityList, Activity).
 
 % ############## Input Conversion ##############
 % ### Convert availability ###
@@ -121,12 +132,46 @@ build_pref_row([Activity|RestActivities], staff(Name, _, _), [Pref|RestPrefs]) :
 % get_preference(+Name, +Activity, -Pref)
 get_preference(Name, activity(Slug, _, _, _, _), Pref) :-
     preference(Name, Slug, Pref), !.
-get_preference(_, _, 0.0).
+get_preference(_, _, 3).
 
+% ### Convert skills ####
+
+% Indicates how many skills a staff member has that align with an activity
+% build_skills_matrix(-SkillsMatrix)
+build_skills_matrix(SkillsMatrix) :-
+    get_staff_list(StaffList),
+    get_activity_list(ActivityList),
+    build_skills_rows(ActivityList, StaffList, SkillsMatrix).
+
+% build_skills_rows(+ActivityList, +StaffList, -Matrix)
+build_skills_rows(_, [], []).
+build_skills_rows(Activities, [Staff|RestStaff], [Row|Rows]) :-
+    build_skills_row(Activities, Staff, Row),
+    build_skills_rows(Activities, RestStaff, Rows).
+
+% build_skills_row(+ActivityList, +Staff, -Row)
+build_skills_row([], _, []).
+build_skills_row([Activity|Rest], Staff, [NumSkills|RestNums]) :-
+    calc_skills_alignment(Staff, Activity, NumSkills),
+    build_skills_row(Rest, Staff, RestNums).
+
+% calc_skills_alignment(+Staff, +Activity, -SkillsAlign)
+calc_skills_alignment(staff(_, _, StaffSkills), activity(_, _, _, _, ActivitySkills), SkillsAlign) :-
+    intersection(StaffSkills, ActivitySkills, CommonSkills),
+    length(CommonSkills, SkillsAlign).
+
+% intersection(+List1, +List2, -Intersection)
+intersection([], _, []).
+intersection([H|T], L, [H|R]) :-
+    member(H, L), !,
+    intersection(T, L, R).
+intersection([H|T], L, R) :-
+    \+ member(H, L), !,
+    intersection(T, L, R).
 
 % ############## Constraints ##############
 
-allocate(Allocation):- 
+allocate(Allocation, Utility):- 
     get_activity_num(NumActivities),
     get_staff_num(NumStaff),
 
@@ -138,7 +183,18 @@ allocate(Allocation):-
 
     ensure_available(Allocation),
 
-    labeling([], FlatAllocation).
+    build_preferences_matrix(PreferencesMatrix),
+    build_skills_matrix(SkillsMatrix),
+    calc_utility(Allocation, PreferencesMatrix, SkillsMatrix, 1, SkillsAlign, PrefAlign, ExpDiversity),
+
+    Utility #= SkillsAlign + PrefAlign + ExpDiversity,
+
+    labeling([maximize(Utility)], FlatAllocation),
+    
+    write('Skills Alignment: '), write(SkillsAlign), nl,
+    write('Preferences Alignment: '), write(PrefAlign), nl,
+    write('Experience Diversity: '), write(ExpDiversity), nl,
+    write('Total Utility: '), write(Utility), nl.
 
 % constraint_num_cols(+Matrix, +Num)
 constraint_num_cols([], _).
@@ -163,3 +219,37 @@ ensure_available_row([Allocation|RestAllocations], [Availability|RestAvailabilit
     Allocation #=< Availability,
     ensure_available_row(RestAllocations, RestAvailabilities).
 
+% calc_utility(+Allocation, +PreferencesMatrix, +SkillsMatrix, +Idx, -SkillsAlign, -PrefAlign, -ExpDiversity)
+calc_utility([], [], [], _, 0, 0, 0).
+calc_utility([AllocationRow|RestAllocations], [PreferencesRow|RestPreferences], [SkillsRow|RestSkills], Idx, SkillsAlign, PrefAlign, ExpDiversity) :-
+    index_to_staff(Idx, Staff),
+    scalar_product(PreferencesRow, AllocationRow, #=, PrefAlignRow),
+    scalar_product(SkillsRow, AllocationRow, #=, SkillsAlignRow),
+    %calc_utility_row(Staff, AllocationRow, 1, SkillsAlignRow, ExpDiversityRow),
+    ExpDiversityRow = 0, % Placeholder for experience diversity, can be implemented later.
+    Idx1 is Idx + 1,
+    calc_utility(RestAllocations, RestPreferences, RestSkills, Idx1, RestSkillsAlign, RestPrefAlign, RestExpDiversity),
+    SkillsAlign #= SkillsAlignRow + RestSkillsAlign,
+    PrefAlign #= PrefAlignRow + RestPrefAlign,
+    ExpDiversity #= ExpDiversityRow + RestExpDiversity.
+
+% calc_utility_row(+Staff, +AllocationRow, +Idx, -SkillsAlign, -ExpDiversity)
+calc_utility_row(_, [], _, 0, 0).
+calc_utility_row(Staff, [CurrAllocation|RestAllocations], Idx, SkillsAlign, ExpDiversity) :-
+    CurrAllocation #= 1, !, % If the staff is allocated to the activity
+    index_to_activity(Idx, Activity),
+    calc_skills_alignment(Staff, Activity, CurrSkillsAlign),
+    % calc_experience_diversity(Staff, Activity, CurrPrefAlign),
+
+    Idx1 is Idx + 1,
+    calc_utility_row(Staff, RestAllocations, Idx1, RestSkillsAlign, RestExpDiversity),
+
+    SkillsAlign #= CurrSkillsAlign + RestSkillsAlign,
+    ExpDiversity #= 0. % Placeholder for experience diversity, can be implemented later.
+calc_utility_row(_, [CurrAllocation|RestAllocations], Idx, SkillsAlign, ExpDiversity) :-
+    % If the staff is not allocated to the activity, set all alignments to 0
+    CurrAllocation #= 0, !,
+    Idx1 is Idx + 1,
+    calc_utility_row(_, RestAllocations, Idx1, RestSkillsAlign, RestExpDiversity),
+    SkillsAlign #= RestSkillsAlign,
+    ExpDiversity #= RestExpDiversity.
