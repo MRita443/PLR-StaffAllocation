@@ -5,9 +5,9 @@
 
 % staff(+name, +experience, +skills)
 % experience is an integer value [1, 5], skills is a list of skills
-staff(alice, 3, [logistics]).
-staff(john, 1, [logistics]).
-staff(jane, 2, [program, cocktails]).
+staff(alice, 4, [logistics]).
+staff(john, 2, [logistics]).
+staff(jane, 3, [program, cocktails]).
 
 % activity(slug, min_staff, start_time, duration, skills)
 activity(coffee_break, 2, 10.5, 2, [logistics, cocktails]).
@@ -160,32 +160,23 @@ calc_skills_alignment(staff(_, _, StaffSkills), activity(_, _, _, _, ActivitySki
     intersection(StaffSkills, ActivitySkills, CommonSkills),
     length(CommonSkills, SkillsAlign).
 
-% intersection(+List1, +List2, -Intersection)
-intersection([], _, []).
-intersection([H|T], L, [H|R]) :-
-    member(H, L), !,
-    intersection(T, L, R).
-intersection([H|T], L, R) :-
-    \+ member(H, L), !,
-    intersection(T, L, R).
-
 % ############## Constraints ##############
 
-allocate(Allocation, Utility):- 
+allocate(StaffToActivity, ActivityToStaff, Utility):- 
     get_activity_num(NumActivities),
     get_staff_num(NumStaff),
 
-    length(Allocation, NumStaff),
-    constraint_num_cols(Allocation, NumActivities),
+    length(StaffToActivity, NumStaff),
+    constraint_num_cols(StaffToActivity, NumActivities),
 
-    append(Allocation, FlatAllocation),
+    append(StaffToActivity, FlatAllocation),
     domain(FlatAllocation, 0, 1),
 
-    ensure_available(Allocation),
+    transpose(StaffToActivity, ActivityToStaff),
 
-    build_preferences_matrix(PreferencesMatrix),
-    build_skills_matrix(SkillsMatrix),
-    calc_utility(Allocation, PreferencesMatrix, SkillsMatrix, 1, SkillsAlign, PrefAlign, ExpDiversity),
+    ensure_available(StaffToActivity),
+
+    calc_utility(StaffToActivity, ActivityToStaff, SkillsAlign, PrefAlign, ExpDiversity),
 
     Utility #= SkillsAlign + PrefAlign + ExpDiversity,
 
@@ -219,37 +210,59 @@ ensure_available_row([Allocation|RestAllocations], [Availability|RestAvailabilit
     Allocation #=< Availability,
     ensure_available_row(RestAllocations, RestAvailabilities).
 
-% calc_utility(+Allocation, +PreferencesMatrix, +SkillsMatrix, +Idx, -SkillsAlign, -PrefAlign, -ExpDiversity)
-calc_utility([], [], [], _, 0, 0, 0).
-calc_utility([AllocationRow|RestAllocations], [PreferencesRow|RestPreferences], [SkillsRow|RestSkills], Idx, SkillsAlign, PrefAlign, ExpDiversity) :-
-    index_to_staff(Idx, Staff),
+% calc_utility(+StaffToActivity, +ActivityToStaff, -SkillsAlign, -PrefAlign, -ExpDiversity)
+calc_utility(StaffToActivity, ActivityToStaff, SkillsAlign, PrefAlign, ExpDiversity) :-
+    build_preferences_matrix(PreferencesMatrix),
+    build_skills_matrix(SkillsMatrix),
+    findall(Exp, staff(_, Exp, _), ExpList),
+    calc_utility_staff(StaffToActivity, PreferencesMatrix, SkillsMatrix, SkillsAlign, PrefAlign),
+    calc_utility_activity(ActivityToStaff, ExpList, ExpDiversity).
+
+% calc_utility_staff(+ActivityToStaff, +PreferencesMatrix, +SkillsMatrix, -SkillsAlign, -PrefAlign)
+calc_utility_staff([], [], [], 0, 0).
+calc_utility_staff([AllocationRow|RestAllocations], [PreferencesRow|RestPreferences], [SkillsRow|RestSkills], SkillsAlign, PrefAlign) :-
     scalar_product(PreferencesRow, AllocationRow, #=, PrefAlignRow),
     scalar_product(SkillsRow, AllocationRow, #=, SkillsAlignRow),
-    %calc_utility_row(Staff, AllocationRow, 1, SkillsAlignRow, ExpDiversityRow),
-    ExpDiversityRow = 0, % Placeholder for experience diversity, can be implemented later.
-    Idx1 is Idx + 1,
-    calc_utility(RestAllocations, RestPreferences, RestSkills, Idx1, RestSkillsAlign, RestPrefAlign, RestExpDiversity),
+    calc_utility_staff(RestAllocations, RestPreferences, RestSkills, RestSkillsAlign, RestPrefAlign),
     SkillsAlign #= SkillsAlignRow + RestSkillsAlign,
-    PrefAlign #= PrefAlignRow + RestPrefAlign,
+    PrefAlign #= PrefAlignRow + RestPrefAlign.
+
+% calc_utility_activity(+ActivityToStaff, +ExperienceList, -ExpDiversity) :
+calc_utility_activity([], _, 0).
+calc_utility_activity([AllocationRow|RestAllocations], ExpList, ExpDiversity) :-
+    multiply_lists(ExpList, AllocationRow, ExperienceRow), % Zero out entries where staff is not allocated
+    maximum(MaxExp, ExperienceRow),
+    max_nonzero_diff(MaxExp, ExperienceRow, ExpDiversityRow), % Calculate diversity as the difference between max and min experience
+    calc_utility_activity(RestAllocations, ExpList, RestExpDiversity),
     ExpDiversity #= ExpDiversityRow + RestExpDiversity.
 
-% calc_utility_row(+Staff, +AllocationRow, +Idx, -SkillsAlign, -ExpDiversity)
-calc_utility_row(_, [], _, 0, 0).
-calc_utility_row(Staff, [CurrAllocation|RestAllocations], Idx, SkillsAlign, ExpDiversity) :-
-    CurrAllocation #= 1, !, % If the staff is allocated to the activity
-    index_to_activity(Idx, Activity),
-    calc_skills_alignment(Staff, Activity, CurrSkillsAlign),
-    % calc_experience_diversity(Staff, Activity, CurrPrefAlign),
+% ############## Utilities ##############
 
-    Idx1 is Idx + 1,
-    calc_utility_row(Staff, RestAllocations, Idx1, RestSkillsAlign, RestExpDiversity),
+% maz_nonzero_diff(+X, +List, -MaxDiff)
+% max diff between X and non-zero elements in List
+max_nonzero_diff(_, [], 0).
+max_nonzero_diff(X, [Y|Ys], MaxDiff) :-
+    Diff #= abs(X - Y),
+    Y #\= 0 #<=> NonZero,
+    max_nonzero_diff(X, Ys, RestMaxDiff),
+    Diff #> RestMaxDiff #<=> Larger,
+    bool_and([NonZero, Larger], Keep),
+    if_then_else(Keep, Diff, RestMaxDiff, MaxDiff).
 
-    SkillsAlign #= CurrSkillsAlign + RestSkillsAlign,
-    ExpDiversity #= 0. % Placeholder for experience diversity, can be implemented later.
-calc_utility_row(_, [CurrAllocation|RestAllocations], Idx, SkillsAlign, ExpDiversity) :-
-    % If the staff is not allocated to the activity, set all alignments to 0
-    CurrAllocation #= 0, !,
-    Idx1 is Idx + 1,
-    calc_utility_row(_, RestAllocations, Idx1, RestSkillsAlign, RestExpDiversity),
-    SkillsAlign #= RestSkillsAlign,
-    ExpDiversity #= RestExpDiversity.
+% multiply_lists(+List1, +List2, -Result)
+multiply_lists([], [], []).
+multiply_lists([X|Xs], [Y|Ys], [Z|Zs]) :-
+    Z #= X * Y,
+    multiply_lists(Xs, Ys, Zs).
+
+% intersection(+List1, +List2, -Intersection)
+intersection([], _, []).
+intersection([H|T], L, [H|R]) :-
+    member(H, L), !,
+    intersection(T, L, R).
+intersection([H|T], L, R) :-
+    \+ member(H, L), !,
+    intersection(T, L, R).
+
+
+
