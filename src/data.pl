@@ -1,4 +1,4 @@
-:- module(data, [staff/3, activity/5, preference/3, available/2]).
+:- module(data, [staff/3, activity/5, available/2, preference/3]).
 
 % ############## Test Data ##############
 
@@ -9,7 +9,7 @@ staff(john, 2, [logistics]).
 staff(jane, 3, [program, cocktails]).
 
 % activity(slug, min_staff, start_time, duration, skills)
-activity(coffee_break, 2, 10.5, 2, [logistics, cocktails]).
+activity(coffee_break, 2, 10, 2, [logistics, cocktails]).
 activity(workshop_1, 1, 9, 2, [program]).
 
 % available(staffName, activitySlug)
