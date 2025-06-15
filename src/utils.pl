@@ -3,7 +3,7 @@
 
 % ############## Utilities ##############
 
-% maz_nonzero_diff(+X, +List, -MaxDiff)
+% max_nonzero_diff(+X, +List, -MaxDiff)
 % max diff between X and non-zero elements in List
 max_nonzero_diff(_, [], 0).
 max_nonzero_diff(X, [Y|Ys], MaxDiff) :-
