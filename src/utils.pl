@@ -1,4 +1,4 @@
-:- module(utils, [max_nonzero_diff/3, multiply_lists/3, intersection/3]).
+:- module(utils, [max_nonzero_diff/3, multiply_lists/3, intersection/3, sublist_from/3]).
 :- use_module(library(clpfd)).
 
 % ############## Utilities ##############
@@ -28,3 +28,10 @@ intersection([H|T], L, [H|R]) :-
 intersection([H|T], L, R) :-
     \+ member(H, L), !,
     intersection(T, L, R).
+
+% sublist_from(+Idx, +List, -Sublist)
+sublist_from(Idx, List, Sublist) :-
+    Idx #> 0,
+    PrefixLen #= Idx - 1,
+    length(Prefix, PrefixLen),
+    append(Prefix, Sublist, List).

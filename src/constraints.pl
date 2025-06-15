@@ -1,6 +1,7 @@
 :-module(constraints, [constraint_num_cols/2, ensure_available/1, ensure_no_overlap/1]).
 
 :-use_module(data_utils).
+:-use_module(utils).
 :-use_module(library(clpfd)).
 :-use_module(library(lists)).
 
@@ -43,14 +44,14 @@ ensure_no_overlap_rows([AllocationRow|RestAllocations], OverlapMatrix) :-
 % ensure_no_overlap_row(+AllocationRow, +Idx, +OverlapRow)
 ensure_no_overlap_row([], _, _).    
 ensure_no_overlap_row([CurrAllocation|RestAllocations], Idx, OverlapMatrix) :-
-    % TODO: I need to pass the whole row 
-    nth1(Idx, OverlapMatrix, OverlapRow),
-    nth1(Idx, OverlapRow, CurrOverlap), % TODO: REPLACE BY OverlapRow[Idx:] No need to pass previously checked cols
+    nth1(Idx, OverlapMatrix, OverlapRow), % Get row relative to current activity
+    sublist_from(Idx, OverlapRow, CurrOverlap), % No need to pass previously checked cols
     ensure_no_overlap_w(CurrAllocation, [CurrAllocation|RestAllocations], CurrOverlap),
     Idx1 is Idx + 1,
     ensure_no_overlap_row(RestAllocations, Idx1, OverlapMatrix).
 
 % ensure_no_overlap_w(+CurrAllocation, +AllocationRow, +OverlapRow)
+% Check overlap for current allocation with the rest of the allocations for that member
 ensure_no_overlap_w(_, [], []).
 ensure_no_overlap_w(CurrAllocation, [OtherAllocation|RestAllocations], [Overlap|RestOverlaps]) :-
     CurrAllocation #= 1 #<=> A,
