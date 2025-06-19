@@ -1,0 +1,31 @@
+STAFF = {s1, s2, s3, s4};
+ACTIVITIES = {act1, act2, act3};
+DEPARTMENTS = {DEPT_A, DEPT_B};
+
+available = [|
+  true,  true,  false, |
+  true,  true,  true,  | 
+  true,  true,  true,  |
+  false, true,  true   |
+|];
+
+minStaff = [1, 2, 1];
+
+preference = [|
+  0.9, 0.2, 0.1, |
+  0.5, 0.5, 0.5, |
+  0.1, 0.8, 0.8, |
+  0.1, 0.3, 0.7  |
+|];
+
+staffDept = [DEPT_A, DEPT_A, DEPT_B, DEPT_B];
+activityDept = [DEPT_A, DEPT_B, DEPT_B];
+
+experience = [true, false, false, true];
+
+start = [0, 2, 4];
+duration = [3, 2, 2];
+
+w1 = 10.0;
+w2 = 5.0;
+w3 = 20.0;
