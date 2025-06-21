@@ -5,9 +5,9 @@ import os
 from datetime import datetime
 
 # The base date and time to calculate relative time blocks from
-BASE_DATETIME = datetime(2024, 9, 14, 0, 0, 0)
+BASE_DATETIME = datetime(2024, 10, 7, 0, 0, 0)
 
-LETTUCE_MEET_EVENT_ID = 'eGLXv'
+LETTUCE_MEET_EVENT_ID = 'N6nEo'
 
 def fetch_lettuce_meet_availability(event_id):
     """
