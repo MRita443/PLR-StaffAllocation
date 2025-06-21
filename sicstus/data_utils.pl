@@ -1,7 +1,9 @@
 :- module(data_utils, [get_staff_list/1, get_activity_list/1, get_staff_num/1, get_activity_num/1, index_to_staff_name/2,
                         index_to_staff/2, index_to_activity_slug/2, index_to_activity/2, build_availability_matrix/1,
                         build_preferences_matrix/1, build_skills_matrix/1, build_overlap_matrix/1]).
-:- use_module(data).
+:- use_module('../data_pl/availability').
+:- use_module('../data_pl/staff').
+:- use_module('../data_pl/activities').
 :- use_module(utils).
 :- use_module(library(clpfd)).
 
@@ -9,7 +11,9 @@
 
 % get_staff_list(-StaffList)
 get_staff_list(StaffList) :-
-    findall(staff(Name, Exp, Skills), staff(Name, Exp, Skills), StaffList).
+    findall(Name-staff(Name, Exp, Skills), staff(Name, Exp, Skills), NameStaffPairs),
+    keysort(NameStaffPairs, SortedNameStaffPairs),
+    findall(staff(Name, Exp, Skills), member(_-staff(Name, Exp, Skills), SortedNameStaffPairs), StaffList).
 
 % get_activity_list(-ActivityList)
 get_activity_list(ActivityList) :-

@@ -1,0 +1,5 @@
+var_order,value_selection,value_order,labeling,utility,skills,preferences,experience,time_ms,resumptions,entailments,prunings,backtracks,constraints_created,error
+leftmost,step,up,"[leftmost, step, up]",,,,,,,,,,,no_result
+leftmost,step,down,"[leftmost, step, down]",,,,,,,,,,,no_result
+leftmost,enum,up,"[leftmost, enum, up]",,,,,,,,,,,no_result
+leftmost,enum,down,"[leftmost, enum, down]",,,,,,,,,,,no_result
