@@ -1,3 +1,7 @@
+:- module(data, [activity/5]).
+
+% ############## Activity Data ##############
+
 activity(workshop_react_next_1, 2, 40, 8, [react, next, teaching, program]).
 activity(escape_room_1, 2, 52, 3, [program]).
 activity(workshop_react_next_2, 2, 58, 8, [react, next, teaching, program]).

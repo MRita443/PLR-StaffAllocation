@@ -20,7 +20,6 @@ available(jane, workshop_1).
 
 % preference(staffName, activitySlug, preference) -> [0, 5] integer values
 % Ommitted preferences defaults to 3
-preference(alice, coffee_break, 3).
 preference(alice, workshop_1, 4).
 preference(john, coffee_break, 1).
 preference(john, workshop_1, 0).
