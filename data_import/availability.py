@@ -145,13 +145,6 @@ def generate_prolog_predicate(staff_data, activity_data):
 def generate_json_output(staff_data, activity_data):
     """
     Generates the availability data as a list of dictionaries for JSON output.
-
-    Args:
-        staff_data (dict): The parsed staff availability data.
-        activity_data (list): The parsed activity data.
-
-    Returns:
-        list: A list of dictionaries, ready for JSON serialization.
     """
     staff_names = sorted(staff_data.keys())
     activity_slugs = [act['slug'] for act in activity_data]
@@ -170,33 +163,34 @@ def generate_json_output(staff_data, activity_data):
         
     return json_result
 
-# --- Static Activity Data ---
-# This data remains hardcoded as it's not part of the API response.
-activity_data_str = """
-activity(workshop_react_next_1, 2, 40, 8, [react, next, teaching, program]).
-activity(escape_room_1, 2, 52, 3, [program]).
-activity(workshop_react_next_2, 2, 58, 8, [react, next, teaching, program]).
-activity(coffee_break_1, 3, 66, 2, [operations]).
-activity(escape_room_2, 2, 68, 3, [program]).
-activity(escape_room_3, 2, 71, 3, [program]).
-activity(talk_visual_design, 1, 154, 4, [program]).
-activity(panel_pi, 1, 164, 4, [program]).
-activity(talk_haskell, 1, 168, 2, [program]).
-activity(escape_room_4, 2, 148, 3, [program]).
-activity(escape_room_5, 2, 151, 3, [program]).
-activity(escape_room_6, 2, 154, 3, [program]).
-activity(escape_room_7, 2, 157, 3, [program]).
-activity(coffee_break_2, 3, 162, 2, [operations]).
-activity(talk_chess, 1, 254, 3, [program]).
-activity(talk_design_ai, 1, 262, 4, [program]).
-activity(workshop_github_actions, 2, 248, 6, [github_actions, teaching, program]).
-activity(coffee_break_3, 3, 258, 2, [operations]).
-"""
+def read_activities_from_file(filepath):
+    """
+    Reads activity data from a Prolog file.
+
+    Args:
+        filepath (str): The path to the activities Prolog file.
+
+    Returns:
+        str: The content of the file, or an empty string if not found.
+    """
+    print(f"Reading activities from {filepath}...")
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            return f.read()
+    except FileNotFoundError:
+        print(f"Error: Activity file not found at {filepath}")
+        return ""
 
 if __name__ == "__main__":
+    activities_filepath = 'data_pl/activities.pl'
+    prolog_availability_filepath = 'data_pl/availability.pl'
+    json_availability_filepath = 'data_json/availability.json'
+    
     staff_data_str = fetch_lettuce_meet_availability(LETTUCE_MEET_EVENT_ID)
+    
+    activity_data_str = read_activities_from_file(activities_filepath)
 
-    if staff_data_str:
+    if staff_data_str and activity_data_str:
         parsed_staff = parse_availability(staff_data_str)
         parsed_activities = parse_activities(activity_data_str)
 
@@ -206,15 +200,14 @@ if __name__ == "__main__":
         os.makedirs('data_pl', exist_ok=True)
         os.makedirs('data_json', exist_ok=True)
 
-        prolog_filepath = 'data_pl/availability.pl'
-        with open(prolog_filepath, 'w', encoding='utf-8') as f:
+        with open(prolog_availability_filepath, 'w', encoding='utf-8') as f:
             f.write(prolog_output)
-        print(f"\nProlog output successfully written to {prolog_filepath}")
+        print(f"\nProlog output successfully written to {prolog_availability_filepath}")
 
-        json_filepath = 'data_json/availability.json'
-        with open(json_filepath, 'w', encoding='utf-8') as f:
+        with open(json_availability_filepath, 'w', encoding='utf-8') as f:
             json.dump(json_output, f, indent=4, ensure_ascii=False)
-        print(f"JSON output successfully written to {json_filepath}")
+        print(f"JSON output successfully written to {json_availability_filepath}")
         
     else:
-        print("Could not generate output files due to an error fetching data.")
+        print("\nCould not generate output files. Check for errors above.")
+
