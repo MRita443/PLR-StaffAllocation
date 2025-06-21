@@ -447,26 +447,6 @@ preference('Tomás Ramos', workshop_github_actions, 2).
 preference('Tomás Ramos', workshop_react_next_1, 1).
 preference('Tomás Ramos', workshop_react_next_2, 1).
 
-staff('Tomás Ramos', 2, [next, program, github_actions]).
-preference('Tomás Ramos', coffee_break_1, 4).
-preference('Tomás Ramos', coffee_break_2, 4).
-preference('Tomás Ramos', coffee_break_3, 4).
-preference('Tomás Ramos', escape_room_1, 1).
-preference('Tomás Ramos', escape_room_2, 1).
-preference('Tomás Ramos', escape_room_3, 1).
-preference('Tomás Ramos', escape_room_4, 1).
-preference('Tomás Ramos', escape_room_5, 1).
-preference('Tomás Ramos', escape_room_6, 1).
-preference('Tomás Ramos', escape_room_7, 1).
-preference('Tomás Ramos', panel_pi, 1).
-preference('Tomás Ramos', talk_chess, 4).
-preference('Tomás Ramos', talk_design_ai, 3).
-preference('Tomás Ramos', talk_haskell, 2).
-preference('Tomás Ramos', talk_visual_design, 3).
-preference('Tomás Ramos', workshop_github_actions, 2).
-preference('Tomás Ramos', workshop_react_next_1, 3).
-preference('Tomás Ramos', workshop_react_next_2, 3).
-
 staff('Tomás Figueiredo Marques Palma', 2, [next, program, operations, github_actions]).
 preference('Tomás Figueiredo Marques Palma', coffee_break_1, 2).
 preference('Tomás Figueiredo Marques Palma', coffee_break_2, 2).
