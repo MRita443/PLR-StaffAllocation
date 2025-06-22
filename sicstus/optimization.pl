@@ -4,22 +4,21 @@
 :- use_module('../data_pl/staff').
 :-use_module(library(clpfd)).
 
-% calc_utility(+StaffToActivity, +ActivityToStaff, -SkillsAlign, -PrefAlign, -ExpDiversity)
-calc_utility(StaffToActivity, ActivityToStaff, SkillsAlign, PrefAlign, ExpDiversity) :-
+% calc_utility(+StaffToActivity, +ActivityToStaff, -SkillsUtility, -PreferenceUtility, -ExpDiversity)
+calc_utility(StaffToActivity, ActivityToStaff, SkillsUtility, PreferenceUtility, ExpDiversity) :-
     build_preferences_matrix(PreferencesMatrix),
     build_skills_matrix(SkillsMatrix),
     findall(Exp, staff(_, Exp, _), ExpList),
-    calc_utility_staff(StaffToActivity, PreferencesMatrix, SkillsMatrix, SkillsAlign, PrefAlign),
+    calc_utility_staff(StaffToActivity, PreferencesMatrix, SkillsMatrix, SkillsUtility, PreferenceUtility),
     calc_utility_activity(ActivityToStaff, ExpList, ExpDiversity).
 
-% calc_utility_staff(+ActivityToStaff, +PreferencesMatrix, +SkillsMatrix, -SkillsAlign, -PrefAlign)
-calc_utility_staff([], [], [], 0, 0).
-calc_utility_staff([AllocationRow|RestAllocations], [PreferencesRow|RestPreferences], [SkillsRow|RestSkills], SkillsAlign, PrefAlign) :-
-    scalar_product(PreferencesRow, AllocationRow, #=, PrefAlignRow),
-    scalar_product(SkillsRow, AllocationRow, #=, SkillsAlignRow),
-    calc_utility_staff(RestAllocations, RestPreferences, RestSkills, RestSkillsAlign, RestPrefAlign),
-    SkillsAlign #= SkillsAlignRow + RestSkillsAlign,
-    PrefAlign #= PrefAlignRow + RestPrefAlign.
+% calc_utility_staff(+ActivityToStaff, +PreferencesMatrix, +SkillsMatrix, -SkillsUtility, -PreferenceUtility)
+calc_utility_staff(ActivityToStaff, PreferencesMatrix, SkillsMatrix, SkillsUtility, PreferenceUtility) :-
+    append(ActivityToStaff, FlatAllocations),
+    append(SkillsMatrix, FlatSkillsMatrix),
+    append(PreferenceMatrix, FlatPreferenceMatrix),
+    scalar_product(FlatSkillsMatrix, FlatAllocations, #=, SkillsUtility),
+    scalar_product(FlatPreferenceMatrix, FlatAllocations, #=, PreferenceUtility),
 
 % calc_utility_activity(+ActivityToStaff, +ExperienceList, -ExpDiversity) :
 calc_utility_activity([], _, 0).
