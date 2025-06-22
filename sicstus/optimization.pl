@@ -1,5 +1,5 @@
 /** <module> Objective function definition and optimization. */
-:- module(optimization, [find_optimal_solution/4]).
+:- module(optimization, [find_optimal_solution/5]).
 
 :- use_module(library(clpfd)).
 :- use_module(library(lists), [append/2, transpose/2]).
@@ -7,10 +7,10 @@
 :- use_module(data).
 :- use_module(utils).
 
-%!  find_optimal_solution(+AllocationMatrix, +StaffIDs, +ActivityIDs, -ObjectiveValue)
+%!  find_optimal_solution(+LabelingOptions, +AllocationMatrix, +StaffIDs, +ActivityIDs, -ObjectiveValue)
 %
 %   Defines and maximizes the objective function.
-find_optimal_solution(AllocationMatrix, StaffIDs, ActivityIDs, ObjectiveValue) :-
+find_optimal_solution(LabelingOptions, AllocationMatrix, StaffIDs, ActivityIDs, ObjectiveValue) :-
     create_utility_matrices(StaffIDs, ActivityIDs, SkillsMatrix, PreferenceMatrix),
 
     append(AllocationMatrix, FlatAllocations),
@@ -34,11 +34,12 @@ find_optimal_solution(AllocationMatrix, StaffIDs, ActivityIDs, ObjectiveValue) :
                      ExperienceWeight * ExperienceDiversity -
                      AssignmentPenalty* TotalAssignments,
 
-    labeling([maximize(ObjectiveValue)], FlatAllocations).
+    append([maximize(ObjectiveValue)], LabelingOptions, FinalLabelingOptions),
+    labeling(FinalLabelingOptions, FlatAllocations).
 
 create_utility_matrices([], _, [], []).
 create_utility_matrices([StaffID | RestStaff], ActivityIDs, [SkillRow | RestSkillRows], [PrefRow | RestPrefRows]) :-
-    staff(StaffID, _, _, StaffSkills),
+    staff(StaffID, _, StaffSkills),
     create_utility_rows(ActivityIDs, StaffID, StaffSkills, SkillRow, PrefRow),
     create_utility_matrices(RestStaff, ActivityIDs, RestSkillRows, RestPrefRows).
 
@@ -61,7 +62,7 @@ calculate_total_experience_diversity(AllocationMatrix, StaffIDs, TotalExperience
 
 collect_staff_experience([], []).
 collect_staff_experience([StaffID | RestStaff], [Experience | RestExperience]) :-
-    staff(StaffID, _, Experience, _),
+    staff(StaffID, Experience, _),
     collect_staff_experience(RestStaff, RestExperience).
 
 sum_activity_diversity([], _, 0).

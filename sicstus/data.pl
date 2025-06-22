@@ -1,15 +1,15 @@
 /** <module> Data for the Staff Scheduling problem */
 :- module(data, [
-    staff/4,
+    staff/3,
     activity/5,
     preference/3,
     available/2
 ]).
 
 % staff(ID, Name, ExperienceLevel, Skills)
-staff(1, 'Alice', 1, [teaching, logistics]).
-staff(2, 'Bob', 3, [programming, teaching]).
-staff(3, 'Charlie', 5, [ci_cd, devops]).
+staff(1, 1, [teaching, logistics]).
+staff(2, 3, [programming, teaching]).
+staff(3, 5, [ci_cd, devops]).
 
 % activity(ID, MinStaff, StartTime, Duration, RequiredSkills)
 activity(a, 1, 10, 2, [programming, teaching]).
