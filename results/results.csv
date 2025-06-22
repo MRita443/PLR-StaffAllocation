@@ -1,0 +1,12 @@
+var_order,value_selection,value_order,labeling,utility,skills,preferences,experience,time_ms,resumptions,entailments,prunings,backtracks,constraints_created,error
+leftmost,step,up,"[leftmost, step, up]",0,0,0,0,3,8,8,103,0,8,
+leftmost,step,down,"[leftmost, step, down]",0,0,0,0,3,8,8,103,0,8,
+leftmost,enum,up,"[leftmost, enum, up]",0,0,0,0,3,8,8,103,0,8,
+leftmost,enum,down,"[leftmost, enum, down]",0,0,0,0,4,8,8,103,0,8,
+leftmost,bisect,up,"[leftmost, bisect, up]",0,0,0,0,3,8,8,103,0,8,
+leftmost,bisect,down,"[leftmost, bisect, down]",0,0,0,0,3,8,8,103,0,8,
+leftmost,median,up,"[leftmost, median, up]",0,0,0,0,3,8,8,103,0,8,
+leftmost,median,down,"[leftmost, median, down]",0,0,0,0,4,8,8,103,0,8,
+leftmost,middle,up,"[leftmost, middle, up]",0,0,0,0,3,8,8,103,0,8,
+leftmost,middle,down,"[leftmost, middle, down]",0,0,0,0,4,8,8,103,0,8,
+leftmost,value(selRandomValue),,"[leftmost, value(selRandomValue)]",0,0,0,0,3,8,8,103,0,8,
