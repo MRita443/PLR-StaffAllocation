@@ -1,2 +1,5 @@
 # macOS cruft
 .DS_Store
+
+# Python virtual environment
+venv/
