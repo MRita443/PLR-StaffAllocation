@@ -1,4 +1,4 @@
-:- module(data, [staff/3, preference/3]).
+:- module(staff, [staff/3, preference/3]).
 
 % ############## Staff Data ##############
 

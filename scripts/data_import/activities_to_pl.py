@@ -119,8 +119,8 @@ def main() -> None:
     )
     parser.add_argument(
         "--module-name",
-        default="data",
-        help="Name of the Prolog module (default: 'data')",
+        default="activities",
+        help="Name of the Prolog module (default: 'activities')",
     )
     parser.add_argument(
         "--module-predicates",

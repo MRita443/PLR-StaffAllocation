@@ -11,9 +11,7 @@
 
 % get_staff_list(-StaffList)
 get_staff_list(StaffList) :-
-    findall(Name-staff(Name, Exp, Skills), staff(Name, Exp, Skills), NameStaffPairs),
-    keysort(NameStaffPairs, SortedNameStaffPairs),
-    findall(staff(Name, Exp, Skills), member(_-staff(Name, Exp, Skills), SortedNameStaffPairs), StaffList).
+    findall(staff(Name, Exp, Skills), staff(Name, Exp, Skills), StaffList).
 
 % get_activity_list(-ActivityList)
 get_activity_list(ActivityList) :-

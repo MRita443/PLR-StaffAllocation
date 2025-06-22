@@ -1,4 +1,4 @@
-:- module(data, [activity/5]).
+:- module(activities, [activity/5]).
 
 % ############## Activity Data ##############
 

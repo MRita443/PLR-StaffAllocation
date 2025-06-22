@@ -1,4 +1,4 @@
-:- module(data, [staff/3, activity/5, available/2, preference/3]).
+:- module(test_data, [staff/3, activity/5, available/2, preference/3]).
 
 % ############## Test Data ##############
 

@@ -1,7 +1,7 @@
 :-module(optimization, [calc_utility/5]).
 :-use_module(utils).
 :-use_module(data_utils).
-:-use_module(data).
+:- use_module('../data_pl/staff').
 :-use_module(library(clpfd)).
 
 % calc_utility(+StaffToActivity, +ActivityToStaff, -SkillsAlign, -PrefAlign, -ExpDiversity)

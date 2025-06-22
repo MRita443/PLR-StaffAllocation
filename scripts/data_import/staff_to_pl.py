@@ -70,7 +70,7 @@ def convert_json_to_prolog(
         return
 
     # Define the module and its exported predicates
-    module_header = ":- module(data, [staff/3, preference/3]).\n\n"
+    module_header = ":- module(staff, [staff/3, preference/3]).\n\n"
 
     with output_prolog_path.open("w", encoding="utf-8") as out:
         out.write(module_header)
