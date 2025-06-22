@@ -29,8 +29,9 @@ post_constraints(StaffToActivity, ActivityToStaff, FlatAllocation, Utility, Skil
 %allocate_statistics(+LabelingOptions)
 allocate_statistics(LabelingOptions) :- 
     post_constraints(_, _, FlatAllocation, Utility, SkillsAlign, PrefAlign, ExpDiversity),
+    sum(FlatAllocation, #=, Allocations),
 
-    append([maximize(Utility)], LabelingOptions, FinalLabelingOptions),
+    append([maximize(Utility), minimize(Allocations)], LabelingOptions, FinalLabelingOptions),
 
     statistics(runtime, _),
     labeling(FinalLabelingOptions, FlatAllocation),
@@ -43,7 +44,7 @@ allocate_statistics(LabelingOptions) :-
 %allocate(-StaffToActivity, -ActivityToStaff)
 allocate(StaffToActivity, ActivityToStaff) :- 
     post_constraints(StaffToActivity, ActivityToStaff, FlatAllocation, Utility, SkillsAlign, PrefAlign, ExpDiversity),
-
+    
     labeling([maximize(Utility)], FlatAllocation),
     
     write('Skills Alignment: '), write(SkillsAlign), nl,

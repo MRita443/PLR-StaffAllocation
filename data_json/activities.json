@@ -13,7 +13,7 @@
       ]
     },
     {
-      "slug": "escape_room_1",
+      "slug": "escape_room",
       "min_staff": 2,
       "start_time": 52,
       "duration": 3,
@@ -30,33 +30,6 @@
         "react",
         "next",
         "teaching",
-        "program"
-      ]
-    },
-    {
-      "slug": "coffee_break_1",
-      "min_staff": 3,
-      "start_time": 66,
-      "duration": 2,
-      "skills": [
-        "operations"
-      ]
-    },
-    {
-      "slug": "escape_room_2",
-      "min_staff": 2,
-      "start_time": 68,
-      "duration": 3,
-      "skills": [
-        "program"
-      ]
-    },
-    {
-      "slug": "escape_room_3",
-      "min_staff": 2,
-      "start_time": 71,
-      "duration": 3,
-      "skills": [
         "program"
       ]
     },
@@ -79,73 +52,10 @@
       ]
     },
     {
-      "slug": "talk_haskell",
-      "min_staff": 1,
-      "start_time": 168,
-      "duration": 2,
-      "skills": [
-        "program"
-      ]
-    },
-    {
-      "slug": "escape_room_4",
-      "min_staff": 2,
-      "start_time": 148,
-      "duration": 3,
-      "skills": [
-        "program"
-      ]
-    },
-    {
-      "slug": "escape_room_5",
-      "min_staff": 2,
-      "start_time": 151,
-      "duration": 3,
-      "skills": [
-        "program"
-      ]
-    },
-    {
-      "slug": "escape_room_6",
-      "min_staff": 2,
-      "start_time": 154,
-      "duration": 3,
-      "skills": [
-        "program"
-      ]
-    },
-    {
-      "slug": "escape_room_7",
-      "min_staff": 2,
-      "start_time": 157,
-      "duration": 3,
-      "skills": [
-        "program"
-      ]
-    },
-    {
-      "slug": "coffee_break_2",
-      "min_staff": 3,
-      "start_time": 162,
-      "duration": 2,
-      "skills": [
-        "operations"
-      ]
-    },
-    {
       "slug": "talk_chess",
       "min_staff": 1,
       "start_time": 254,
       "duration": 3,
-      "skills": [
-        "program"
-      ]
-    },
-    {
-      "slug": "talk_design_ai",
-      "min_staff": 1,
-      "start_time": 262,
-      "duration": 4,
       "skills": [
         "program"
       ]

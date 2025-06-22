@@ -15,7 +15,7 @@ VALUE_SELECTIONS = [
     "step", "enum", "bisect", "median", "middle", "value(selRandomValue)"
 ]
 
-VALUE_ORDERINGS = ["up", "down"]  # Only applies to built-in value selection strategies
+VALUE_ORDERINGS = ["down", "up"]  # Only applies to built-in value selection strategies
 
 RESULTS_FILE = "results/results.csv"
 
@@ -41,7 +41,7 @@ def run_prolog(labeling_str):
                 stdout=outfile,
                 stderr=outfile,
                 stdin=subprocess.DEVNULL,
-                timeout=30
+                timeout=180
             )
 
         with open(tmp_path, "r") as infile:
