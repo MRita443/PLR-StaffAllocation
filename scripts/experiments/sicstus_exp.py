@@ -20,7 +20,7 @@ VALUE_ORDERINGS = ["up", "down"]  # Only applies to built-in value selection str
 RESULTS_FILE = "results/results.csv"
 
 def build_labeling(var, val, order=None):
-    """Constructs the Prolog labeling list string including maximize(Utility)."""
+    """Constructs the Prolog labeling list string."""
     if val.startswith("value("):
         return f"[{var}, {val}]"
     else:

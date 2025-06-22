@@ -1,8 +1,9 @@
 :-module(optimization, [calc_utility/5]).
 :-use_module(utils).
 :-use_module(data_utils).
-:- use_module('../data_pl/staff').
+:-use_module('../data_pl/staff').
 :-use_module(library(clpfd)).
+:-use_module(library(lists)).
 
 % calc_utility(+StaffToActivity, +ActivityToStaff, -SkillsUtility, -PreferenceUtility, -ExpDiversity)
 calc_utility(StaffToActivity, ActivityToStaff, SkillsUtility, PreferenceUtility, ExpDiversity) :-
@@ -12,13 +13,13 @@ calc_utility(StaffToActivity, ActivityToStaff, SkillsUtility, PreferenceUtility,
     calc_utility_staff(StaffToActivity, PreferencesMatrix, SkillsMatrix, SkillsUtility, PreferenceUtility),
     calc_utility_activity(ActivityToStaff, ExpList, ExpDiversity).
 
-% calc_utility_staff(+ActivityToStaff, +PreferencesMatrix, +SkillsMatrix, -SkillsUtility, -PreferenceUtility)
-calc_utility_staff(ActivityToStaff, PreferencesMatrix, SkillsMatrix, SkillsUtility, PreferenceUtility) :-
-    append(ActivityToStaff, FlatAllocations),
+% calc_utility_staff(+StaffToActivity, +PreferencesMatrix, +SkillsMatrix, -SkillsUtility, -PreferenceUtility)
+calc_utility_staff(StaffToActivity, PreferencesMatrix, SkillsMatrix, SkillsUtility, PreferenceUtility) :-
+    append(StaffToActivity, FlatAllocations),
     append(SkillsMatrix, FlatSkillsMatrix),
-    append(PreferenceMatrix, FlatPreferenceMatrix),
+    append(PreferencesMatrix, FlatPreferenceMatrix),
     scalar_product(FlatSkillsMatrix, FlatAllocations, #=, SkillsUtility),
-    scalar_product(FlatPreferenceMatrix, FlatAllocations, #=, PreferenceUtility),
+    scalar_product(FlatPreferenceMatrix, FlatAllocations, #=, PreferenceUtility).
 
 % calc_utility_activity(+ActivityToStaff, +ExperienceList, -ExpDiversity) :
 calc_utility_activity([], _, 0).

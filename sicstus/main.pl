@@ -21,6 +21,7 @@ post_constraints(StaffToActivity, ActivityToStaff, FlatAllocation, Utility, Skil
 
     ensure_available(StaffToActivity),
     ensure_no_overlap(StaffToActivity),
+    ensure_min_staff(ActivityToStaff),
 
     calc_utility(StaffToActivity, ActivityToStaff, SkillsAlign, PrefAlign, ExpDiversity),
     Utility #= SkillsAlign + PrefAlign + ExpDiversity.

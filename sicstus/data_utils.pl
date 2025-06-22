@@ -6,6 +6,7 @@
 :- use_module('../data_pl/activities').
 :- use_module(utils).
 :- use_module(library(clpfd)).
+:- use_module(library(lists)).
 
 % ############## Data Utils ##############
 
