@@ -1,4 +1,4 @@
-:- module(utils, [max_nonzero_diff/3, multiply_lists/3, intersection/3, sublist_from/3, selRandomVar/3, selRandomValue/4]).
+:- module(utils, [max_nonzero_diff/3, multiply_lists/3, intersection/3, sublist_from/3, selRandomValue/4]).
 :- use_module(library(clpfd)).
 :- use_module(library(lists)).
 :- use_module(library(random)).
@@ -39,7 +39,7 @@ sublist_from(Idx, List, Sublist) :-
     append(Prefix, Sublist, List).
 
 % selRandomValue(+Var, +Rest, +BB0, -BB1)
-selRandomValue(Var, Rest, BB0, BB1):-
+selRandomValue(Var, _, BB0, BB1):-
     fd_set(Var, Set), fdset_to_list(Set, List),
     random_member(Value, List),
     ( first_bound(BB0, BB1), Var #= Value ;
