@@ -1,31 +1,27 @@
-:- module(solver, [allocate_staff/1]).
+/** <module> Problem setup and main solver entry point. */
+:- module(solver, [allocate_staff/2]).
 
 :- use_module(library(clpfd)).
-:- use_module(library(lists)).
+:- use_module(library(lists), [append/2, length/2, maplist/2, same_length/2]).
 
 :- use_module(data).
 :- use_module(constraints).
 :- use_module(optimization).
 
-% allocate_staff(-Allocations)
-allocate_staff(Allocations) :-
-    % Get all staff members
-    findall(ID, staff(ID, _, _), StaffList),
-    length(StaffList, NumStaff),
+%!  allocate_staff(-AllocationMatrix, -ObjectiveValue)
+%
+%   Finds an optimal staff allocation.
+allocate_staff(AllocationMatrix, ObjectiveValue) :-
+    findall(ID, staff(ID, _, _, _), StaffIDs),
+    findall(ID, activity(ID, _, _, _, _), ActivityIDs),
 
-    % Get all activities
-    findall(ID, activity(ID, _, _, _, _), Activities),
+    length(StaffIDs, NumStaffMembers),
+    length(AllocationMatrix, NumStaffMembers),
+    maplist(same_length(ActivityIDs), AllocationMatrix),
 
-    % Create allocation matrix (Staff x Activities)
-    length(Allocations, NumStaff),
-    maplist(same_length(Activities), Allocations),
+    append(AllocationMatrix, AllocationVars),
+    domain(AllocationVars, 0, 1),
 
-    % Flatten the matrix for constraints
-    append(Allocations, Vars),
-    domain(Vars, 0, 1), % 0 = not assigned, 1 = assigned
+    apply_hard_constraints(AllocationMatrix, StaffIDs, ActivityIDs),
 
-    % Apply constraints
-    constrain_availability(Allocations, StaffList, Activities),
-    constrain_min_staff(Allocations, Activities),
-
-    optimize_allocation(Allocations).
+    find_optimal_solution(AllocationMatrix, StaffIDs, ActivityIDs, ObjectiveValue).

@@ -1,48 +1,62 @@
-:- module(constraints, [constrain_availability/3, constrain_min_staff/2]).
+/** <module> Hard constraints for the staff scheduling problem. */
+:- module(constraints, [apply_hard_constraints/3]).
 
 :- use_module(library(clpfd)).
-:- use_module(library(lists)).
-
+:- use_module(library(lists), [transpose/2]).
 :- use_module(data).
-:- use_module(utils).
 
-% constrain_availability(+Allocations, +StaffList, +Activities)
-constrain_availability(Allocations, StaffList, Activities) :-
-    maplist(apply_staff_constraints(Activities), StaffList, Allocations).
+%!  apply_hard_constraints(+AllocationMatrix, +StaffIDs, +ActivityIDs)
+%
+%   Applies all mandatory constraints to the allocation matrix.
+apply_hard_constraints(AllocationMatrix, StaffIDs, ActivityIDs) :-
+    constrain_staff_rules(AllocationMatrix, StaffIDs, ActivityIDs),
+    constrain_activity_rules(AllocationMatrix, ActivityIDs).
 
-% apply_staff_constraints(+Activities, +StaffID, +StaffRow)
-apply_staff_constraints(Activities, StaffID, StaffRow) :-
-    availability(StaffID, AvailableActivities),
-    maplist(validate_assignment(AvailableActivities), Activities, StaffRow),
-    enforce_no_overlap(Activities, StaffRow).
+constrain_staff_rules([], [], _).
+constrain_staff_rules([StaffAllocations | RestMatrix], [StaffID | RestIDs], ActivityIDs) :-
+    enforce_staff_availability(StaffID, ActivityIDs, StaffAllocations),
+    enforce_no_overlapping_activities(ActivityIDs, StaffAllocations),
+    constrain_staff_rules(RestMatrix, RestIDs, ActivityIDs).
 
-% validate_assignment(+AvailableActivities, +ActivityID, +Var)
-validate_assignment(AvailableActivities, ActivityID, Var) :-
-    ( member(ActivityID, AvailableActivities) -> true ; Var #= 0 ).
+enforce_staff_availability(StaffID, ActivityIDs, StaffAllocations) :-
+    create_availability_mask(StaffID, ActivityIDs, AvailabilityMask),
+    post_availability_constraint(StaffAllocations, AvailabilityMask).
 
-% enforce_no_overlap(+Activities, +StaffRow)
-enforce_no_overlap(Activities, StaffRow) :-
-    pairs_keys_values(Pairs, Activities, StaffRow),
-    ( foreach(A1-V1, Pairs), param(Pairs) do
-        ( foreach(A2-V2, Pairs), param(A1-V1) do 
-            A1 @< A2, activities_overlap(A1, A2) -> V1 + V2 #=< 1   % Prevent double assignment
-            ; true
-        )
-    ).
+create_availability_mask(_, [], []).
+create_availability_mask(StaffID, [ActivityID | RestIDs], [IsAvailable | RestMask]) :-
+    (   available(StaffID, ActivityID) -> IsAvailable = 1 ; IsAvailable = 0   ),
+    create_availability_mask(StaffID, RestIDs, RestMask).
 
-% activities_overlap(+ActivityID1, +ActivityID2)
-activities_overlap(A1, A2) :-
-    activity(A1, _, Start1, Duration1, _),
-    activity(A2, _, Start2, Duration2, _),
-    Start1 < Start2 + Duration2,
-    Start2 < Start1 + Duration1.
+post_availability_constraint([], []).
+post_availability_constraint([AllocVar | RestVars], [IsAvailable | RestMask]) :-
+    AllocVar #=< IsAvailable,
+    post_availability_constraint(RestVars, RestMask).
 
-% constrain_min_staff(+Allocations, +Activities)
-constrain_min_staff(Allocations, Activities) :-
-    transpose(Allocations, ActivityColumns),
-    maplist(ensure_min_staff, Activities, ActivityColumns).
+enforce_no_overlapping_activities(ActivityIDs, StaffAllocations) :-
+    create_cumulative_tasks(ActivityIDs, StaffAllocations, Tasks),
+    cumulative(Tasks, [limit(1)]).
 
-% ensure_min_staff(+ActivityID, +StaffVars)
-ensure_min_staff(ActivityID, StaffVars) :-
-    activity(ActivityID, MinRequired, _, _, _),
-    sum(StaffVars, #>=, MinRequired).
+create_cumulative_tasks([], [], []).
+create_cumulative_tasks([ActID | RestActIDs], [AllocVar | RestVars], [Task | RestTasks]) :-
+    activity(ActID, _, StartTime, Duration, _),
+    EndTime #= StartTime + Duration,
+    Task = task(StartTime, Duration, EndTime, AllocVar, ActID),
+    create_cumulative_tasks(RestActIDs, RestVars, RestTasks).
+
+constrain_activity_rules(AllocationMatrix, ActivityIDs) :-
+    transpose(AllocationMatrix, ActivityColumns),
+    enforce_min_staff_per_activity(ActivityColumns, ActivityIDs).
+
+enforce_min_staff_per_activity(ActivityColumns, ActivityIDs) :-
+    get_activity_min_reqs(ActivityIDs, MinRequirements),
+    post_min_staff_constraints(ActivityColumns, MinRequirements).
+
+get_activity_min_reqs([], []).
+get_activity_min_reqs([ActivityID | RestIDs], [MinStaff | RestReqs]) :-
+    activity(ActivityID, MinStaff, _, _, _),
+    get_activity_min_reqs(RestIDs, RestReqs).
+
+post_min_staff_constraints([], []).
+post_min_staff_constraints([ActivityColumn | RestCols], [MinStaff | RestReqs]) :-
+    sum(ActivityColumn, #>=, MinStaff),
+    post_min_staff_constraints(RestCols, RestReqs).

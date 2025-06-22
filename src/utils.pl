@@ -1,6 +1,18 @@
-:- module(utils, [pairs_keys_values/3, forall/2]).
+/** <module> General utility predicates. */
+:- module(utils, [writeln/1, pretty_print/1, intersection/3]).
 
-% pairs_keys_values(+Pairs, +Keys, +Values)
-pairs_keys_values([], [], []).
-pairs_keys_values([K-V | Pairs], [K | Keys], [V | Values]) :-
-    pairs_keys_values(Pairs, Keys, Values).
+writeln(Term) :-
+    write(Term),
+    nl.
+
+pretty_print([]).
+pretty_print([Row | Rows]) :-
+    writeln(Row),
+    pretty_print(Rows).
+
+intersection([], _, []).
+intersection([H | T], List2, [H | Intersection]) :-
+    member(H, List2), !,
+    intersection(T, List2, Intersection).
+intersection([_ | T], List2, Intersection) :-
+    intersection(T, List2, Intersection).
