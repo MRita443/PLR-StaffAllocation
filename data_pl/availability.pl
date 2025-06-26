@@ -11,7 +11,7 @@ available('Bruno Oliveira', talk_visual_design).
 available('Bruno Oliveira', panel_pi).
 available('Bruno Oliveira', talk_chess).
 available('Bruno Oliveira', workshop_github_actions).
-available('Bruno Oliveira', coffee_break_3).
+available('Bruno Oliveira', coffee_break).
 available('Clara', escape_room).
 available('Clara', workshop_react_next_2).
 available('Diogo Fernandes', workshop_react_next_1).
@@ -24,14 +24,14 @@ available('Francisco Cardoso', escape_room).
 available('Francisco Cardoso', talk_visual_design).
 available('Francisco Cardoso', talk_chess).
 available('Francisco Cardoso', workshop_github_actions).
-available('Francisco Cardoso', coffee_break_3).
+available('Francisco Cardoso', coffee_break).
 available('Goiana', escape_room).
 available('Goiana', talk_visual_design).
 available('Goiana', talk_chess).
 available('Goiana', workshop_github_actions).
-available('Goiana', coffee_break_3).
+available('Goiana', coffee_break).
 available('Guilherme Santos', talk_visual_design).
 available('Guilherme Santos', panel_pi).
 available('Guilherme Santos', talk_chess).
 available('Guilherme Santos', workshop_github_actions).
-available('Guilherme Santos', coffee_break_3).
+available('Guilherme Santos', coffee_break).
