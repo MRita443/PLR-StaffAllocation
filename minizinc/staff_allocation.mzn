@@ -9,7 +9,7 @@ enum SKILLS;
 
 % ==============================================================================
 % Parameters
-% ==============================================================================
+% =========================kk=====================================================
 % available[s, a]: true if staff member 's' is available for activity 'a'
 array[STAFF, ACTIVITIES] of bool: available;
 
@@ -103,4 +103,10 @@ float: w2;
 float: w3;
 float: w4;
 
-solve maximize w1 * u1 + w2 * u2 + w3 * u3 - w4 * u4;
+solve :: int_search(
+    x,                % The array of variables to search on
+    first_fail,       % Variable selection heuristic
+    indomain_max,     % Value selection heuristic
+    complete          % Specifies a complete search
+)
+maximize w1 * u1 + w2 * u2 + w3 * u3 - w4 * u4;

@@ -1,0 +1,88 @@
+% ==============================================================================
+% Sets
+% ==============================================================================
+STAFF = {Andre_Lima, Antonio_Santos, Beatriz_Ferreira, Bruno_Oliveira, Clara, Diogo_Fernandes, Eduarda_Magno, Francisco_Cardoso, Goiana, Guilherme_Santos};
+
+ACTIVITIES = {workshop_react_next_1, escape_room, workshop_react_next_2, talk_visual_design, panel_pi, talk_chess, workshop_github_actions, coffee_break};
+
+SKILLS = {react, next, teaching, program, operations, github_actions};
+
+% ==============================================================================
+% Parameters
+% ==============================================================================
+
+% available[s, a]: true if staff member 's' is available for activity 'a'
+available = array2d(STAFF, ACTIVITIES, [
+    % workshop_react_next_1, escape_room, workshop_react_next_2, talk_visual_design, panel_pi, talk_chess, workshop_github_actions, coffee_break
+    true,  true,  true,  false, false, false, true,  false,  % Andre_Lima
+    false, false, false, false, false, true,  true,  false,  % Antonio_Santos
+    false, false, false, true,  false, false, false, true,   % Beatriz_Ferreira
+    false, true,  true,  true,  true,  true,  true,  true,   % Bruno_Oliveira
+    false, true,  true,  false, false, false, false, false,  % Clara
+    true,  true,  false, true,  true,  false, false, false,  % Diogo_Fernandes
+    false, true,  false, false, false, false, false, false,  % Eduarda_Magno
+    true,  true,  false, true,  false, true,  true,  true,   % Francisco_Cardoso
+    false, true,  false, true,  false, true,  true,  true,   % Goiana
+    false, false, false, true,  true,  true,  true,  true    % Guilherme_Santos
+]);
+
+% minStaff[a]: The minimum number of staff required for activity 'a'
+minStaff = [2, 2, 2, 1, 1, 1, 2, 3];
+
+% preference[s, a]: The preference value (integer) of staff 's' for activity 'a'
+preference = array2d(STAFF, ACTIVITIES, [
+    % workshop_react_next_1, escape_room, workshop_react_next_2, talk_visual_design, panel_pi, talk_chess, workshop_github_actions, coffee_break
+    1, 3, 1, 5, 0, 3, 2, 0,  % Andre_Lima
+    0, 3, 0, 2, 5, 4, 2, 0,  % Antonio_Santos
+    2, 4, 2, 1, 5, 4, 2, 4,  % Beatriz_Ferreira
+    3, 2, 3, 1, 2, 0, 4, 3,  % Bruno_Oliveira
+    1, 1, 1, 2, 2, 3, 3, 5,  % Clara
+    0, 0, 0, 5, 0, 1, 0, 0,  % Diogo_Fernandes
+    0, 4, 0, 4, 5, 0, 2, 0,  % Eduarda_Magno
+    1, 1, 1, 5, 1, 2, 3, 3,  % Francisco_Cardoso
+    2, 3, 2, 5, 0, 4, 1, 5,  % Goiana
+    0, 0, 0, 1, 4, 3, 2, 1   % Guilherme_Santos
+]);
+
+% staffSkills[s, k]: true if staff member 's' has skill 'k'
+staffSkills = array2d(STAFF, SKILLS, [
+    % react, next, teaching, program, operations, github_actions
+    false, true,  true,     true,    true,       false,     % Andre_Lima
+    false, true,  true,     false,   true,       false,     % Antonio_Santos
+    false, true,  false,    true,    false,      true,      % Beatriz_Ferreira
+    false, false, true,     false,   true,       true,      % Bruno_Oliveira
+    true,  true,  true,     true,    true,       true,      % Clara
+    false, true,  false,    false,   false,      false,     % Diogo_Fernandes
+    true,  true,  false,    false,   true,       true,      % Eduarda_Magno
+    false, true,  true,     true,    false,      false,     % Francisco_Cardoso
+    true,  true,  true,     true,    true,       true,      % Goiana
+    true,  false, true,     true,    true,       false      % Guilherme_Santos
+]);
+
+% activitySkills[a, k]: true if activity 'a' requires skill 'k'
+activitySkills = array2d(ACTIVITIES, SKILLS, [
+    % react, next, teaching, program, operations, github_actions
+    true,  true,  true,     true,    false,      false,     % workshop_react_next_1
+    false, false, false,    true,    false,      false,     % escape_room
+    true,  true,  true,     true,    false,      false,     % workshop_react_next_2
+    false, false, false,    true,    false,      false,     % talk_visual_design
+    false, false, false,    true,    false,      false,     % panel_pi
+    false, false, false,    true,    false,      false,     % talk_chess
+    false, false, true,     true,    false,      true,      % workshop_github_actions
+    false, false, false,    false,   true,       false      % coffee_break
+]);
+
+% experience[s]: The experience level (1-5) of staff member 's'
+experience = [3, 3, 1, 3, 1, 5, 4, 1, 3, 4];
+
+% start[a]: The start time block for activity 'a'
+start = [40, 52, 58, 154, 164, 254, 248, 258];
+
+% duration[a]: The duration in time blocks for activity 'a'
+duration = [8, 3, 8, 4, 4, 3, 6, 2];
+
+% Weights for the objective function
+w1 = 7;
+w2 = 10;
+w3 = 5;
+w4 = 1;
