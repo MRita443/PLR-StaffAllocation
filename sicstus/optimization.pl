@@ -3,6 +3,7 @@
 
 :- use_module(library(clpfd)).
 :- use_module(library(lists), [append/2, transpose/2]).
+:- use_module(library(random)).
 
 :- use_module(data).
 :- use_module(utils).
@@ -24,9 +25,9 @@ find_optimal_solution(LabelingOptions, AllocationMatrix, StaffIDs, ActivityIDs, 
 
     sum(FlatAllocations, #=, TotalAssignments),
 
-    SkillsWeight      #= 1,
-    PreferenceWeight  #= 1,
-    ExperienceWeight  #= 1,
+    SkillsWeight      #= 7,
+    PreferenceWeight  #= 10,
+    ExperienceWeight  #= 5,
     AssignmentPenalty #= 1,
 
     ObjectiveValue #= SkillsWeight     * SkillsUtility +
@@ -92,3 +93,10 @@ build_min_experience_terms([], [], _, []).
 build_min_experience_terms([AllocVar | RestAlloc], [Exp | RestExp], BigM, [Term | RestTerms]) :-
     Term #= (1 - AllocVar) * BigM + Exp,
     build_min_experience_terms(RestAlloc, RestExp, BigM, RestTerms).
+
+% selRandomValue(+Var, +Rest, +BB0, -BB1)
+selRandomValue(Var, _, BB0, BB1):-
+    fd_set(Var, Set), fdset_to_list(Set, List),
+    random_member(Value, List),
+    ( first_bound(BB0, BB1), Var #= Value ;
+      later_bound(BB0, BB1), Var #\= Value ).

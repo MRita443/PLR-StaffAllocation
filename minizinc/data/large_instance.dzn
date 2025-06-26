@@ -1,0 +1,164 @@
+% ==============================================================================
+% Sets
+% ==============================================================================
+STAFF = {andre_lima, antonio_santos, beatriz_ferreira, bruno_oliveira, clara, diogo_fernandes, eduarda_magno, francisco_cardoso, goiana, guilherme_santos, ines_gaspar, jose_martins, jose_sousa, joao_silva, joao_torre_pereira, luis_sousa, madalena, marco_vilas_boas, maria_rita_nogueira_lopes, martim_moniz, miguel_garrido, miguel_moita, nery, pedro_vidal, rita_cachaldora, rubem_neto, ruben_esteves, rui_silveira, solange, tomas_figueiredo_marques_palma, tomas_ramos, vitor_pires};
+
+ACTIVITIES = {coffee_break_1, coffee_break_2, coffee_break_3, escape_room_1, escape_room_2, escape_room_3, escape_room_4, escape_room_5, escape_room_6, escape_room_7, panel_pi, talk_chess, talk_design_ai, talk_haskell, talk_visual_design, workshop_github_actions, workshop_react_next_1, workshop_react_next_2};
+
+SKILLS = {github_actions, next, operations, program, react, teaching};
+
+% ==============================================================================
+% Parameters
+% ==============================================================================
+
+% available[s, a]: true if staff member 's' is available for activity 'a'
+available = array2d(STAFF, ACTIVITIES, [
+    % coffee_break_1, coffee_break_2, coffee_break_3, escape_room_1, escape_room_2, escape_room_3, escape_room_4, escape_room_5, escape_room_6, escape_room_7, panel_pi, talk_chess, talk_design_ai, talk_haskell, talk_visual_design, workshop_github_actions, workshop_react_next_1, workshop_react_next_2
+    true,  true,  false, true,  true,  true,  false, false, false, false, false, false, true,  false, true,  true,  true,  true,   % andre_lima
+    false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true,  true,  true,   % antonio_santos
+    true,  true,  false, true,  true,  true,  true,  true,  true,  true,  false, false, true,  false, false, false, false, false,  % beatriz_ferreira
+    true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,   % bruno_oliveira
+    true,  true,  true,  true,  true,  true,  false, false, false, false, true,  false, false, true,  false, false, true,  true,   % clara
+    false, false, false, true,  true,  true,  true,  true,  true,  true,  true,  false, true,  true,  true,  true,  true,  false,  % diogo_fernandes
+    true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  false, false, false, false, false, false, false, false,  % eduarda_magno
+    false, false, false, true,  true,  true,  true,  true,  true,  true,  true,  false, true,  true,  true,  true,  true,  true,   % francisco_cardoso
+    false, false, false, true,  true,  true,  true,  true,  true,  true,  false, false, true,  false, false, true,  true,  true,   % goiana
+    false, false, false, false, false, false, true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  false, false,  % guilherme_santos
+    true,  true,  true,  false, false, false, false, false, false, false, false, false, false, false, false, true,  false, false,  % ines_gaspar
+    false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,  % jose_martins
+    true,  true,  true,  false, false, false, false, true,  false, false, false, false, true,  false, false, true,  false, true,   % jose_sousa
+    false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true,  false, false,  % joao_silva
+    false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true,  false,  % joao_torre_pereira
+    false, false, false, false, false, false, true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  false, false,  % luis_sousa
+    false, false, false, true,  true,  true,  true,  true,  true,  true,  false, false, false, false, true,  true,  true,  true,   % madalena
+    false, false, false, false, false, false, false, false, false, false, true,  false, true,  true,  true,  true,  false, false,  % marco_vilas_boas
+    true,  true,  true,  false, false, false, false, false, false, false, true,  false, false, false, false, false, true,  false,  % maria_rita_nogueira_lopes
+    true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  false, false, false, false, false, false, false,  % martim_moniz
+    false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,  % miguel_garrido
+    false, false, false, false, false, false, true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  false, false,  % miguel_moita
+    true,  true,  true,  false, false, false, true,  true,  true,  true,  true,  false, false, true,  true,  true,  false, false,  % nery
+    true,  true,  true,  true,  true,  true,  false, false, false, false, false, false, true,  false, false, true,  true,  true,   % pedro_vidal
+    true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,   % rita_cachaldora
+    true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  false, false, false, false, false, false, false,  % rubem_neto
+    false, false, false, false, false, false, false, false, false, false, false, false, true,  false, false, true,  true,  true,   % ruben_esteves
+    false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,  % rui_silveira
+    false, false, false, false, false, false, true,  true,  true,  true,  true,  false, true,  true,  true,  true,  false, false,  % solange
+    false, false, false, false, false, false, false, false, false, false, false, false, true,  false, false, true,  true,  true,   % tomas_figueiredo_marques_palma
+    false, false, false, true,  true,  true,  true,  true,  true,  true,  false, true,  true,  false, true,  true,  false, false,  % tomas_ramos
+    false, false, false, false, false, false, true,  true,  true,  true,  false, false, false, false, true,  false, false, false   % vitor_pires
+]);
+
+% minStaff[a]: The minimum number of staff required for activity 'a'
+minStaff = [3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2];
+
+% preference[s, a]: The preference value (integer) of staff 's' for activity 'a'
+preference = array2d(STAFF, ACTIVITIES, [
+    % coffee_break_1, coffee_break_2, coffee_break_3, escape_room_1, escape_room_2, escape_room_3, escape_room_4, escape_room_5, escape_room_6, escape_room_7, panel_pi, talk_chess, talk_design_ai, talk_haskell, talk_visual_design, workshop_github_actions, workshop_react_next_1, workshop_react_next_2
+    0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 0, 3, 1, 4, 5, 2, 1, 1,  % andre_lima
+    0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 5, 4, 2, 0, 2, 2, 0, 0,  % antonio_santos
+    4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 0, 3, 1, 2, 2, 2,  % beatriz_ferreira
+    3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 0, 3, 1, 1, 4, 3, 3,  % bruno_oliveira
+    5, 5, 5, 1, 1, 1, 1, 1, 1, 1, 2, 3, 1, 0, 2, 3, 1, 1,  % clara
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 5, 0, 0, 0,  % diogo_fernandes
+    0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 5, 0, 1, 2, 4, 2, 0, 0,  % eduarda_magno
+    3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 2, 4, 1, 5, 3, 1, 1,  % francisco_cardoso
+    5, 5, 5, 3, 3, 3, 3, 3, 3, 3, 0, 4, 3, 3, 5, 1, 2, 2,  % goiana
+    1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 4, 3, 1, 3, 1, 2, 0, 0,  % guilherme_santos
+    5, 5, 5, 2, 2, 2, 2, 2, 2, 2, 2, 0, 3, 4, 1, 3, 1, 1,  % ines_gaspar
+    1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 2, 2, 5, 1, 3, 2, 1, 1,  % jose_martins
+    0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 2, 2, 4, 3, 4, 4,  % jose_sousa
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 5, 0, 0, 0, 0,  % joao_silva
+    5, 5, 5, 3, 3, 3, 3, 3, 3, 3, 1, 4, 5, 3, 3, 4, 5, 5,  % joao_torre_pereira
+    2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 3, 3, 3, 4, 4,  % luis_sousa
+    1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 3, 0, 5, 2, 5, 1, 3, 3,  % madalena
+    1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 1, 2, 3, 4, 1, 3, 3,  % marco_vilas_boas
+    5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,  % maria_rita_nogueira_lopes
+    0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 5, 3, 2, 3, 3, 0, 0,  % martim_moniz
+    3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 4, 3, 5, 4, 1, 0, 0,  % miguel_garrido
+    4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 4, 5, 1, 2, 1, 1, 1,  % miguel_moita
+    4, 4, 4, 2, 2, 2, 2, 2, 2, 2, 4, 3, 2, 2, 2, 1, 3, 3,  % nery
+    3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 2, 0, 1, 5, 1, 1, 3, 3,  % pedro_vidal
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  % rita_cachaldora
+    2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 5, 1, 4, 3, 4, 3, 1, 1,  % rubem_neto
+    3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 5, 0, 0, 1, 4, 2, 0, 0,  % ruben_esteves
+    5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,  % rui_silveira
+    3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 1, 2, 3, 1, 1,  % solange
+    2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 0, 4, 3, 0, 0,  % tomas_figueiredo_marques_palma
+    4, 4, 4, 2, 2, 2, 2, 2, 2, 2, 4, 2, 3, 4, 2, 2, 1, 1,  % tomas_ramos
+    4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 5, 2, 2, 3, 2, 1, 1   % vitor_pires
+]);
+
+% staffSkills[s, k]: true if staff member 's' has skill 'k'
+staffSkills = array2d(STAFF, SKILLS, [
+    % github_actions, next, operations, program, react, teaching
+    false, true,  true,  true,  false, true,   % andre_lima
+    false, true,  true,  false, false, true,   % antonio_santos
+    true,  true,  false, true,  false, false,  % beatriz_ferreira
+    true,  false, true,  false, false, true,   % bruno_oliveira
+    true,  true,  true,  true,  true,  true,   % clara
+    false, true,  false, false, false, false,  % diogo_fernandes
+    true,  true,  true,  false, true,  false,  % eduarda_magno
+    false, true,  false, true,  false, true,   % francisco_cardoso
+    true,  true,  true,  true,  true,  true,   % goiana
+    false, false, true,  true,  true,  true,   % guilherme_santos
+    false, false, true,  true,  false, true,   % ines_gaspar
+    true,  false, true,  false, true,  true,   % jose_martins
+    true,  true,  false, true,  true,  false,  % jose_sousa
+    true,  false, false, false, false, true,   % joao_silva
+    true,  false, true,  true,  false, false,  % joao_torre_pereira
+    true,  true,  true,  false, false, false,  % luis_sousa
+    true,  true,  true,  false, true,  false,  % madalena
+    false, false, false, false, false, true,   % marco_vilas_boas
+    true,  true,  true,  true,  true,  true,   % maria_rita_nogueira_lopes
+    false, false, true,  false, true,  false,  % martim_moniz
+    false, false, true,  false, false, true,   % miguel_garrido
+    true,  true,  true,  true,  true,  false,  % miguel_moita
+    false, false, false, true,  true,  false,  % nery
+    false, true,  true,  true,  false, false,  % pedro_vidal
+    true,  true,  true,  true,  true,  true,   % rita_cachaldora
+    true,  false, false, true,  false, true,   % rubem_neto
+    true,  false, true,  true,  true,  false,  % ruben_esteves
+    false, true,  true,  true,  true,  false,  % rui_silveira
+    true,  true,  true,  false, true,  false,  % solange
+    true,  true,  true,  true,  false, false,  % tomas_figueiredo_marques_palma
+    false, false, true,  true,  true,  false,  % tomas_ramos
+    false, true,  true,  false, false, false   % vitor_pires
+]);
+
+% activitySkills[a, k]: true if activity 'a' requires skill 'k'
+activitySkills = array2d(ACTIVITIES, SKILLS, [
+    % github_actions, next, operations, program, react, teaching
+    false, false, true,  false, false, false,  % coffee_break_1
+    false, false, true,  false, false, false,  % coffee_break_2
+    false, false, true,  false, false, false,  % coffee_break_3
+    false, false, false, true,  false, false,  % escape_room_1
+    false, false, false, true,  false, false,  % escape_room_2
+    false, false, false, true,  false, false,  % escape_room_3
+    false, false, false, true,  false, false,  % escape_room_4
+    false, false, false, true,  false, false,  % escape_room_5
+    false, false, false, true,  false, false,  % escape_room_6
+    false, false, false, true,  false, false,  % escape_room_7
+    false, false, false, true,  false, false,  % panel_pi
+    false, false, false, true,  false, false,  % talk_chess
+    false, false, false, true,  false, false,  % talk_design_ai
+    false, false, false, true,  false, false,  % talk_haskell
+    false, false, false, true,  false, false,  % talk_visual_design
+    true,  false, false, false, false, true,   % workshop_github_actions
+    false, true,  false, true,  true,  true,   % workshop_react_next_1
+    false, true,  false, true,  true,  true    % workshop_react_next_2
+]);
+
+% experience[s]: The experience level (1-5) of staff member 's'
+experience = [3, 3, 1, 3, 1, 5, 4, 1, 3, 4, 3, 2, 2, 5, 4, 4, 4, 2, 5, 2, 2, 3, 2, 4, 5, 1, 2, 3, 3, 2, 2, 2];
+
+% start[a]: The start time block for activity 'a'
+start = [66, 162, 258, 52, 68, 71, 148, 151, 154, 157, 164, 254, 262, 168, 154, 248, 40, 58];
+
+% duration[a]: The duration in time blocks for activity 'a'
+duration = [2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 3, 4, 2, 4, 6, 8, 8];
+
+% Weights for the objective function
+w1 = 7;
+w2 = 10;
+w3 = 5;
+w4 = 1;
