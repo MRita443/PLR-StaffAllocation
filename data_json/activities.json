@@ -1,0 +1,84 @@
+{
+  "activity": [
+    {
+      "slug": "workshop_react_next_1",
+      "min_staff": 2,
+      "start_time": 40,
+      "duration": 8,
+      "skills": [
+        "react",
+        "next",
+        "teaching",
+        "program"
+      ]
+    },
+    {
+      "slug": "escape_room",
+      "min_staff": 2,
+      "start_time": 52,
+      "duration": 3,
+      "skills": [
+        "program"
+      ]
+    },
+    {
+      "slug": "workshop_react_next_2",
+      "min_staff": 2,
+      "start_time": 58,
+      "duration": 8,
+      "skills": [
+        "react",
+        "next",
+        "teaching",
+        "program"
+      ]
+    },
+    {
+      "slug": "talk_visual_design",
+      "min_staff": 1,
+      "start_time": 154,
+      "duration": 4,
+      "skills": [
+        "program"
+      ]
+    },
+    {
+      "slug": "panel_pi",
+      "min_staff": 1,
+      "start_time": 164,
+      "duration": 4,
+      "skills": [
+        "program"
+      ]
+    },
+    {
+      "slug": "talk_chess",
+      "min_staff": 1,
+      "start_time": 254,
+      "duration": 3,
+      "skills": [
+        "program"
+      ]
+    },
+    {
+      "slug": "workshop_github_actions",
+      "min_staff": 2,
+      "start_time": 248,
+      "duration": 6,
+      "skills": [
+        "github_actions",
+        "teaching",
+        "program"
+      ]
+    },
+    {
+      "slug": "coffee_break",
+      "min_staff": 3,
+      "start_time": 258,
+      "duration": 2,
+      "skills": [
+        "operations"
+      ]
+    }
+  ]
+}
