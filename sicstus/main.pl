@@ -49,11 +49,8 @@ main_stats(LabelingOptions) :-
 % main (human-readable output)
 main :-
     allocate_staff([leftmost, step, down], AllocationMatrix, ObjectiveValue),
-
     get_activity_ids(ActivityIDs),
     get_staff_ids(StaffIDs),
-
-    write(AllocationMatrix), nl,
 
     format("Objective Value: ~w~n~n", [ObjectiveValue]),
 

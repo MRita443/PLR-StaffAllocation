@@ -1,0 +1,232 @@
+[
+    {
+        "name": "André Lima",
+        "availability": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "escape_room",
+            "workshop_react_next_2",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_chess",
+            "workshop_github_actions",
+            "coffee_break"
+        ]
+    },
+    {
+        "name": "António Santos",
+        "availability": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "escape_room",
+            "workshop_react_next_2",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_chess",
+            "workshop_github_actions",
+            "coffee_break"
+        ]
+    },
+    {
+        "name": "Beatriz Ferreira",
+        "availability": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "escape_room",
+            "workshop_react_next_2",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_chess",
+            "workshop_github_actions",
+            "coffee_break"
+        ]
+    },
+    {
+        "name": "Bruno Oliveira",
+        "availability": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "escape_room",
+            "workshop_react_next_2",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_chess",
+            "workshop_github_actions",
+            "coffee_break"
+        ]
+    },
+    {
+        "name": "Clara",
+        "availability": [
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "escape_room",
+            "workshop_react_next_2",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_chess",
+            "workshop_github_actions",
+            "coffee_break"
+        ]
+    },
+    {
+        "name": "Diogo Fernandes",
+        "availability": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "escape_room",
+            "workshop_react_next_2",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_chess",
+            "workshop_github_actions",
+            "coffee_break"
+        ]
+    },
+    {
+        "name": "Eduarda Magno",
+        "availability": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "escape_room",
+            "workshop_react_next_2",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_chess",
+            "workshop_github_actions",
+            "coffee_break"
+        ]
+    },
+    {
+        "name": "Francisco Cardoso",
+        "availability": [
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "escape_room",
+            "workshop_react_next_2",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_chess",
+            "workshop_github_actions",
+            "coffee_break"
+        ]
+    },
+    {
+        "name": "Goiana",
+        "availability": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "escape_room",
+            "workshop_react_next_2",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_chess",
+            "workshop_github_actions",
+            "coffee_break"
+        ]
+    },
+    {
+        "name": "Guilherme Santos",
+        "availability": [
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "escape_room",
+            "workshop_react_next_2",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_chess",
+            "workshop_github_actions",
+            "coffee_break"
+        ]
+    }
+]
