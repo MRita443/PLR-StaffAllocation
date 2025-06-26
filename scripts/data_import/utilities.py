@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 from typing import Any, Dict, List
+import logging
+import argparse
 
 # -------------------------
 # Configs & Constants
@@ -16,6 +18,26 @@ BLOCKS_PER_DAY = 24 * 60 // BLOCK_MINUTES  # 96 blocks/day
 # -------------------------
 # Utilities
 # -------------------------
+
+def create_base_parser(description: str) -> argparse.ArgumentParser:
+    """Creates a base ArgumentParser with common input/output folder arguments."""
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument(
+        "-i",
+        "--input-folder",
+        default=DEFAULT_INPUT_FOLDER,
+        type=Path,
+        help=f"Input folder (default: '{DEFAULT_INPUT_FOLDER.name}')",
+    )
+    parser.add_argument(
+        "-o",
+        "--output-folder",
+        default=DEFAULT_OUTPUT_FOLDER,
+        type=Path,
+        help=f"Output folder (default: '{DEFAULT_OUTPUT_FOLDER.name}')",
+    )
+    return parser
+
 def time_to_block(tstr: str) -> int:
     """Converts a time string (HH:MM:SS) to a block number."""
     h, m, s = map(int, tstr.strip().split(":"))

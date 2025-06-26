@@ -4,6 +4,11 @@ import json
 from typing import Dict, Any, List
 from datetime import datetime
 from pathlib import Path # Import Path for file operations
+import logging
+
+# --- Logger Setup ---
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
 from utilities import (
     prolog_atom,
@@ -29,7 +34,7 @@ def fetch_lettuce_meet_availability(event_id: str) -> str:
         str: A multi-line string containing the availability data formatted
              as Prolog facts, or an empty string if the request fails.
     """
-    print(f"Fetching availability data for event: {event_id}...")
+    logger.info(f"Fetching availability data for event: {event_id}...")
     headers = {
         'authority': 'api.lettucemeet.com',
         'accept': '*/*',
@@ -81,14 +86,14 @@ def fetch_lettuce_meet_availability(event_id: str) -> str:
                     # Create the raw availability fact for the user.
                     prolog_predicates.append(f"availability('{user_name}', [{prolog_intervals}]).")
 
-        print("Successfully fetched and processed data.")
+        logger.info("Successfully fetched and processed data.")
         return "\n".join(prolog_predicates)
 
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching data from Lettuce Meet API: {e}")
+        logger.error(f"Error fetching data from Lettuce Meet API: {e}")
         return ""
     except (KeyError, TypeError) as e:
-        print(f"Error parsing API response: {e}")
+        logger.error(f"Error parsing API response: {e}")
         return ""
 
 
@@ -190,12 +195,12 @@ def read_activities_from_file(filepath: Path) -> str:
     """
     Reads activity data from a Prolog file.
     """
-    print(f"Reading activities from {filepath}...")
+    logger.info(f"Reading activities from {filepath}...")
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             return f.read()
     except FileNotFoundError:
-        print(f"Error: Activity file not found at {filepath}")
+        logger.error(f"Error: Activity file not found at {filepath}")
         return ""
 
 if __name__ == "__main__":
@@ -224,12 +229,12 @@ if __name__ == "__main__":
         ensure_folder_exists(prolog_availability_filepath.parent)
         with open(prolog_availability_filepath, 'w', encoding='utf-8') as f:
             f.write(prolog_output)
-        print(f"\nProlog output successfully written to {prolog_availability_filepath}")
+        logger.info(f"Prolog output successfully written to {prolog_availability_filepath}")
 
         ensure_folder_exists(json_availability_filepath.parent)
         with open(json_availability_filepath, 'w', encoding='utf-8') as f:
             json.dump(json_output, f, indent=4, ensure_ascii=False)
-        print(f"JSON output successfully written to {json_availability_filepath}")
+        logger.info(f"JSON output successfully written to {json_availability_filepath}")
 
     else:
-        print("\nCould not generate output files. Check for errors above.")
+        logger.info("\nCould not generate output files. Check for errors above.")

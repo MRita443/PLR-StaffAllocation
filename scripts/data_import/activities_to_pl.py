@@ -77,11 +77,12 @@ def convert_json_to_prolog(
                 out.write(prolog_fact)
             except Exception as e:
                 raise ValueError(
-                    f"Error converting item {i} to Prolog: {e}\nItem data: {item}"
+                    f"Error converting item {i} from JSON: {item}. Error: {e}"
                 )
 
     logger.info(
-        f"✔ Successfully converted JSON to Prolog: {output_prolog_path.resolve()}"
+        f"Successfully converted data from {input_json_path.name} to "
+        f"Prolog facts in {output_prolog_path.resolve()}."
     )
 
 
@@ -89,19 +90,22 @@ def convert_json_to_prolog(
 # Entry Point
 # -------------------------
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Convert JSON data to Prolog facts.")
+    """Main function for converting JSON activities to Prolog facts."""
+    parser = argparse.ArgumentParser(
+        description="Convert JSON data to Prolog facts."
+    )
     parser.add_argument(
-        "input_file",
+        "input_file", 
         nargs="?",  # Make input_file optional
-        default="activities.json",  # Set default value
-        help="Input JSON filename (default: 'activities.json')",
+        default="activities.json",
+        help="Input JSON filename (default: activities.json)"
     )
     parser.add_argument(
         "-i",
         "--input-folder",
         default=DEFAULT_JSON_FOLDER,
         type=Path,
-        help=f"Input folder for JSON (default: {DEFAULT_JSON_FOLDER})",
+        help=f"Input folder (default: {DEFAULT_JSON_FOLDER})",
     )
     parser.add_argument(
         "-o",
@@ -142,7 +146,7 @@ def main() -> None:
         convert_json_to_prolog(
             input_path,
             output_path,
-            format_activity_pl, 
+            format_activity_pl,
             args.json_key,
             args.module_name,
             args.module_predicates,
@@ -152,7 +156,7 @@ def main() -> None:
     except json.JSONDecodeError as e:
         logger.error(f"❌ JSON decoding error. Ensure input JSON is well-formed: {e}")
     except Exception as e:
-        logger.error(f"❌ An unexpected error occurred: {e}", exc_info=True)
+        logger.exception(f"❌ An unexpected error occurred: {e}")
 
 
 if __name__ == "__main__":
