@@ -1,4 +1,3 @@
-# json_to_prolog.py
 import json
 import logging
 from pathlib import Path
@@ -91,7 +90,12 @@ def convert_json_to_prolog(
 # -------------------------
 def main() -> None:
     parser = argparse.ArgumentParser(description="Convert JSON data to Prolog facts.")
-    parser.add_argument("input_file", help="Input JSON filename (required)")
+    parser.add_argument(
+        "input_file",
+        nargs="?",  # Make input_file optional
+        default="activities.json",  # Set default value
+        help="Input JSON filename (default: 'activities.json')",
+    )
     parser.add_argument(
         "-i",
         "--input-folder",
@@ -138,7 +142,7 @@ def main() -> None:
         convert_json_to_prolog(
             input_path,
             output_path,
-            format_activity_pl,  # This is hardcoded for activity, could be generalized
+            format_activity_pl, 
             args.json_key,
             args.module_name,
             args.module_predicates,

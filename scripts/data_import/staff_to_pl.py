@@ -55,7 +55,7 @@ def convert_json_to_prolog(
     Reads staff data from a JSON file and converts it into Prolog facts,
     writing them to an output .pl file.
     """
-    validate_file_exists(input_json_path)  # Now correctly passes input_json_path
+    validate_file_exists(input_json_path)
     ensure_folder_exists(output_prolog_path.parent)
 
     with input_json_path.open(encoding="utf-8") as json_file:
@@ -92,7 +92,10 @@ def main() -> None:
         description="Convert staff JSON data to Prolog facts."
     )
     parser.add_argument(
-        "input_file", help="Input staff JSON filename (e.g., 'staff.json')"
+        "input_file",
+        nargs="?",  # Make input_file optional
+        default="staff.json",  # Set default value
+        help="Input staff JSON filename (default: 'staff.json')",
     )
     parser.add_argument(
         "-i",
