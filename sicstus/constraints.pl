@@ -3,39 +3,42 @@
 
 :- use_module(library(clpfd)).
 :- use_module(library(lists), [transpose/2]).
-:- use_module(data).
+
+:- use_module(data_utils).
+:- use_module('../data_pl/activities').
+
 
 %!  apply_hard_constraints(+AllocationMatrix, +StaffIDs, +ActivityIDs)
 %
 %   Applies all mandatory constraints to the allocation matrix.
 apply_hard_constraints(AllocationMatrix, StaffIDs, ActivityIDs) :-
     constrain_staff_rules(AllocationMatrix, StaffIDs, ActivityIDs),
-    constrain_activity_rules(AllocationMatrix, ActivityIDs).
+    constrain_activity_rules(AllocationMatrix).
 
+% constrain_staff_rules(+AllocationMatrix, +StaffIDs, +ActivityIDs)
 constrain_staff_rules([], [], _).
 constrain_staff_rules([StaffAllocations | RestMatrix], [StaffID | RestIDs], ActivityIDs) :-
     enforce_staff_availability(StaffID, ActivityIDs, StaffAllocations),
     enforce_no_overlapping_activities(ActivityIDs, StaffAllocations),
     constrain_staff_rules(RestMatrix, RestIDs, ActivityIDs).
 
+% enforce_staff_availability(+StaffID, +ActivityIDs, +StaffAllocations)
 enforce_staff_availability(StaffID, ActivityIDs, StaffAllocations) :-
     create_availability_mask(StaffID, ActivityIDs, AvailabilityMask),
     post_availability_constraint(StaffAllocations, AvailabilityMask).
 
-create_availability_mask(_, [], []).
-create_availability_mask(StaffID, [ActivityID | RestIDs], [IsAvailable | RestMask]) :-
-    (   available(StaffID, ActivityID) -> IsAvailable = 1 ; IsAvailable = 0   ),
-    create_availability_mask(StaffID, RestIDs, RestMask).
-
+% post_availability_constraint(+AllocVars, +AvailabilityMask)
 post_availability_constraint([], []).
 post_availability_constraint([AllocVar | RestVars], [IsAvailable | RestMask]) :-
-    AllocVar #=< IsAvailable,
+    AllocVar #=< IsAvailable, % Ensure allocation only if available
     post_availability_constraint(RestVars, RestMask).
 
+% enforce_no_overlapping_activities(+ActivityIDs, +StaffAllocations)
 enforce_no_overlapping_activities(ActivityIDs, StaffAllocations) :-
     create_cumulative_tasks(ActivityIDs, StaffAllocations, Tasks),
     cumulative(Tasks, [limit(1)]).
 
+% create_cumulative_tasks(+ActivityIDs, +AllocVars, -Tasks)
 create_cumulative_tasks([], [], []).
 create_cumulative_tasks([ActID | RestActIDs], [AllocVar | RestVars], [Task | RestTasks]) :-
     activity(ActID, _, StartTime, Duration, _),
@@ -43,20 +46,18 @@ create_cumulative_tasks([ActID | RestActIDs], [AllocVar | RestVars], [Task | Res
     Task = task(StartTime, Duration, EndTime, AllocVar, ActID),
     create_cumulative_tasks(RestActIDs, RestVars, RestTasks).
 
-constrain_activity_rules(AllocationMatrix, ActivityIDs) :-
-    transpose(AllocationMatrix, ActivityColumns),
-    enforce_min_staff_per_activity(ActivityColumns, ActivityIDs).
+% constrain_activity_rules(+AllocationMatrix)
+constrain_activity_rules(AllocationMatrix) :-
+    transpose(AllocationMatrix, ActivityColumns), % Get Activity x Staff matrix
+    enforce_min_staff_per_activity(ActivityColumns).
 
-enforce_min_staff_per_activity(ActivityColumns, ActivityIDs) :-
-    get_activity_min_reqs(ActivityIDs, MinRequirements),
+% enforce_min_staff_per_activity(+ActivityColumns)
+enforce_min_staff_per_activity(ActivityColumns) :-
+    get_min_staff_list(MinRequirements),
     post_min_staff_constraints(ActivityColumns, MinRequirements).
 
-get_activity_min_reqs([], []).
-get_activity_min_reqs([ActivityID | RestIDs], [MinStaff | RestReqs]) :-
-    activity(ActivityID, MinStaff, _, _, _),
-    get_activity_min_reqs(RestIDs, RestReqs).
-
+% post_min_staff_constraints(+ActivityColumns, +MinStaffRequirements)
 post_min_staff_constraints([], []).
 post_min_staff_constraints([ActivityColumn | RestCols], [MinStaff | RestReqs]) :-
-    sum(ActivityColumn, #>=, MinStaff),
+    sum(ActivityColumn, #>=, MinStaff), % Sum of allocations must meet minimum staff requirement
     post_min_staff_constraints(RestCols, RestReqs).

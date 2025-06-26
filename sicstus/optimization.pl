@@ -4,7 +4,7 @@
 :- use_module(library(clpfd)).
 :- use_module(library(lists), [append/2, transpose/2]).
 
-:- use_module(data).
+:- use_module(data_utils).
 :- use_module(utils).
 
 %!  find_optimal_solution(+LabelingOptions, +AllocationMatrix, +StaffIDs, +ActivityIDs, -ObjectiveValue)
@@ -17,11 +17,14 @@ find_optimal_solution(LabelingOptions, AllocationMatrix, StaffIDs, ActivityIDs, 
     append(SkillsMatrix, FlatSkillsMatrix),
     append(PreferenceMatrix, FlatPreferenceMatrix),
 
+    % Calculate skills and preference utilities
     scalar_product(FlatSkillsMatrix, FlatAllocations, #=, SkillsUtility),
     scalar_product(FlatPreferenceMatrix, FlatAllocations, #=, PreferenceUtility),
 
-    calculate_total_experience_diversity(AllocationMatrix, StaffIDs, ExperienceDiversity),
+    % Calculate experience diversity
+    calculate_total_experience_diversity(AllocationMatrix, ExperienceDiversity),
 
+    % Calculate total assignments
     sum(FlatAllocations, #=, TotalAssignments),
 
     SkillsWeight      #= 1,
@@ -30,41 +33,20 @@ find_optimal_solution(LabelingOptions, AllocationMatrix, StaffIDs, ActivityIDs, 
     AssignmentPenalty #= 1,
 
     ObjectiveValue #= SkillsWeight     * SkillsUtility +
-                     PreferenceWeight * PreferenceUtility +
-                     ExperienceWeight * ExperienceDiversity -
-                     AssignmentPenalty* TotalAssignments,
+                     PreferenceWeight  * PreferenceUtility +
+                     ExperienceWeight  * ExperienceDiversity -
+                     AssignmentPenalty * TotalAssignments,
 
     append([maximize(ObjectiveValue)], LabelingOptions, FinalLabelingOptions),
     labeling(FinalLabelingOptions, FlatAllocations).
 
-create_utility_matrices([], _, [], []).
-create_utility_matrices([StaffID | RestStaff], ActivityIDs, [SkillRow | RestSkillRows], [PrefRow | RestPrefRows]) :-
-    staff(StaffID, _, StaffSkills),
-    create_utility_rows(ActivityIDs, StaffID, StaffSkills, SkillRow, PrefRow),
-    create_utility_matrices(RestStaff, ActivityIDs, RestSkillRows, RestPrefRows).
-
-create_utility_rows([], _, _, [], []).
-create_utility_rows([ActivityID | RestActivities], StaffID, StaffSkills, [SkillScore | RestSkills], [PrefScore | RestPrefs]) :-
-    activity(ActivityID, _, _, _, RequiredSkills),
-    intersection(StaffSkills, RequiredSkills, MatchedSkills),
-    length(MatchedSkills, SkillScore),
-    get_preference_score(StaffID, ActivityID, PrefScore),
-    create_utility_rows(RestActivities, StaffID, StaffSkills, RestSkills, RestPrefs).
-
-get_preference_score(StaffID, ActivityID, Score) :-
-    preference(StaffID, ActivityID, Score), !.
-get_preference_score(_, _, 3). % Default preference score.
-
-calculate_total_experience_diversity(AllocationMatrix, StaffIDs, TotalExperienceDiversity) :-
-    collect_staff_experience(StaffIDs, StaffExperience),
-    transpose(AllocationMatrix, ActivityColumns),
+% calculate_total_experience_diversity(+AllocationMatrix, -TotalExperienceDiversity)
+calculate_total_experience_diversity(AllocationMatrix, TotalExperienceDiversity) :-
+    get_experience_list(StaffExperience), % Get all staff experience
+    transpose(AllocationMatrix, ActivityColumns), % Get Activity x Staff matrix
     sum_activity_diversity(ActivityColumns, StaffExperience, TotalExperienceDiversity).
 
-collect_staff_experience([], []).
-collect_staff_experience([StaffID | RestStaff], [Experience | RestExperience]) :-
-    staff(StaffID, Experience, _),
-    collect_staff_experience(RestStaff, RestExperience).
-
+% sum_activity_diversity(+ActivityColumns, +StaffExperience, -TotalDiversity)
 sum_activity_diversity([], _, 0).
 sum_activity_diversity([ActivityCol | RestCols], StaffExperience, TotalDiversity) :-
     calculate_activity_diversity(ActivityCol, StaffExperience, ActivityDiversity),

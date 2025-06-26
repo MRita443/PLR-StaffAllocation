@@ -6,6 +6,7 @@
 :- use_module(solver).
 :- use_module(utils).
 
+% main(+LabelingOptions)
 main(LabelingOptions) :-
     % Reset statistics
     statistics(runtime, [_,_]),

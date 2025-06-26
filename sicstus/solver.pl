@@ -4,7 +4,7 @@
 :- use_module(library(clpfd)).
 :- use_module(library(lists), [append/2, maplist/2, same_length/2]).
 
-:- use_module(data).
+:- use_module(data_utils).
 :- use_module(constraints).
 :- use_module(optimization).
 
@@ -12,8 +12,8 @@
 %
 %   Finds an optimal staff allocation.
 allocate_staff(LabelingOptions, AllocationMatrix, ObjectiveValue) :-
-    findall(ID, staff(ID, _, _), StaffIDs),
-    findall(ID, activity(ID, _, _, _, _), ActivityIDs),
+    get_activity_ids(ActivityIDs),
+    get_staff_ids(StaffIDs),
 
     length(StaffIDs, NumStaffMembers),
     length(AllocationMatrix, NumStaffMembers),
