@@ -5,9 +5,10 @@
 
 :- use_module(solver).
 :- use_module(utils).
+:- use_module(data_utils).
 
-% main(+LabelingOptions)
-main(LabelingOptions) :-
+% main_stats(+LabelingOptions)
+main_stats(LabelingOptions) :-
     % Reset statistics
     statistics(runtime, [_,_]),
     fd_statistics(resumptions, Resumptions1),
@@ -44,3 +45,17 @@ main(LabelingOptions) :-
         ])
     ;   format('RESULT:~w,FAIL,0,0,0,0,0,0~n', [LabelingOptions])
     ).
+
+% main (human-readable output)
+main :-
+    allocate_staff([leftmost, step, down], AllocationMatrix, ObjectiveValue),
+
+    get_activity_ids(ActivityIDs),
+    get_staff_ids(StaffIDs),
+
+    write(AllocationMatrix), nl,
+
+    format("Objective Value: ~w~n~n", [ObjectiveValue]),
+
+    print_allocations_by_day(StaffIDs, ActivityIDs, AllocationMatrix).
+

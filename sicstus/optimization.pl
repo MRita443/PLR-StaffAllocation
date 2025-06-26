@@ -27,9 +27,9 @@ find_optimal_solution(LabelingOptions, AllocationMatrix, StaffIDs, ActivityIDs, 
     % Calculate total assignments
     sum(FlatAllocations, #=, TotalAssignments),
 
-    SkillsWeight      #= 1,
-    PreferenceWeight  #= 1,
-    ExperienceWeight  #= 1,
+    SkillsWeight      #= 8,
+    PreferenceWeight  #= 10,
+    ExperienceWeight  #= 5,
     AssignmentPenalty #= 1,
 
     ObjectiveValue #= SkillsWeight     * SkillsUtility +
