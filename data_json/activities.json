@@ -61,6 +61,15 @@
       ]
     },
     {
+      "slug": "talk_haskell",
+      "min_staff": 1,
+      "start_time": 168,
+      "duration": 2,
+      "skills": [
+        "program"
+      ]
+    },
+    {
       "slug": "escape_room_2",
       "min_staff": 2,
       "start_time": 151,

@@ -8,6 +8,7 @@ activity(coffee_break_1, 3, 66, 2, [operations]).
 activity(escape_room_1, 2, 68, 3, [program]).
 activity(talk_visual_design, 1, 154, 4, [program]).
 activity(panel_pi, 1, 164, 4, [program]).
+activity(talk_haskell, 1, 168, 2, [program]).
 activity(escape_room_2, 2, 151, 3, [program]).
 activity(escape_room_3, 2, 154, 3, [program]).
 activity(talk_chess, 1, 254, 3, [program]).
