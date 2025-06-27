@@ -1,8 +1,21 @@
 import re
 import requests
 import json
-import os
+from typing import Dict, Any, List
 from datetime import datetime
+from pathlib import Path # Import Path for file operations
+import logging
+
+# --- Logger Setup ---
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+
+from utilities import (
+    prolog_atom,
+    ensure_folder_exists,
+    DEFAULT_OUTPUT_FOLDER,
+    DEFAULT_JSON_FOLDER
+)
 
 # The base date and time to calculate relative time blocks from
 BASE_DATETIME = datetime(2024, 10, 7, 0, 0, 0)
@@ -10,7 +23,7 @@ BASE_DATETIME = datetime(2024, 10, 7, 0, 0, 0)
 # The event ID from the Lettuce Meet URL (e.g., https://lettucemeet.com/N6nEo)
 LETTUCE_MEET_EVENT_ID = 'N6nEo'
 
-def fetch_lettuce_meet_availability(event_id):
+def fetch_lettuce_meet_availability(event_id: str) -> str:
     """
     Fetches availability data from the Lettuce Meet API for a specific event.
 
@@ -21,7 +34,7 @@ def fetch_lettuce_meet_availability(event_id):
         str: A multi-line string containing the availability data formatted
              as Prolog facts, or an empty string if the request fails.
     """
-    print(f"Fetching availability data for event: {event_id}...")
+    logger.info(f"Fetching availability data for event: {event_id}...")
     headers = {
         'authority': 'api.lettucemeet.com',
         'accept': '*/*',
@@ -42,49 +55,49 @@ def fetch_lettuce_meet_availability(event_id):
         'query': 'query EventQuery(\n  $id: ID!\n) {\n  event(id: $id) {\n    ...Event_event\n    id\n  }\n}\n\nfragment Event_event on Event {\n  id\n  pollResponses {\n    user {\n      __typename\n      ... on AnonymousUser {\n        name\n      }\n      ... on User {\n        name\n      }\n    }\n    availabilities {\n      start\n      end\n    }\n  }\n}',
         'variables': {'id': event_id},
     }
-    
+
     try:
         response = requests.post('https://api.lettucemeet.com/graphql', headers=headers, json=json_data)
         response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
         response_json = response.json()
-        
+
         prolog_predicates = []
         jsondata = response_json.get("data", {}).get("event", {}).get("pollResponses", [])
 
         for i in jsondata:
             # Capitalize the first letter of each word in the name for consistency.
             user_name = i.get("user", {}).get("name", "Unknown").title()
-            
+
             if "availabilities" in i and i["availabilities"]:
                 intervals_for_user = []
                 for availability in i["availabilities"]:
                     # Convert ISO 8601 datetime strings to datetime objects.
                     start_dt = datetime.fromisoformat(availability["start"].replace('Z', ''))
                     end_dt = datetime.fromisoformat(availability["end"].replace('Z', ''))
-                    
+
                     # Calculate the start and end blocks in 15-minute increments from the base datetime.
                     start_block = int((start_dt - BASE_DATETIME).total_seconds() / (15 * 60))
                     end_block = int((end_dt - BASE_DATETIME).total_seconds() / (15 * 60))
-                    
+
                     intervals_for_user.append(f"{start_block}-{end_block}")
-                
+
                 if intervals_for_user:
                     prolog_intervals = ", ".join(intervals_for_user)
                     # Create the raw availability fact for the user.
                     prolog_predicates.append(f"availability('{user_name}', [{prolog_intervals}]).")
-        
-        print("Successfully fetched and processed data.")
+
+        logger.info("Successfully fetched and processed data.")
         return "\n".join(prolog_predicates)
 
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching data from Lettuce Meet API: {e}")
+        logger.error(f"Error fetching data from Lettuce Meet API: {e}")
         return ""
     except (KeyError, TypeError) as e:
-        print(f"Error parsing API response: {e}")
+        logger.error(f"Error parsing API response: {e}")
         return ""
 
 
-def parse_availability(data):
+def parse_availability(data: str) -> Dict[str, List[List[int]]]:
     """
     Parses the availability data strings from fetch_lettuce_meet_availability
     into a dictionary mapping names to their time intervals.
@@ -104,7 +117,7 @@ def parse_availability(data):
             staff_availability[name] = intervals
     return staff_availability
 
-def parse_activities(data):
+def parse_activities(data: str) -> List[Dict[str, Any]]:
     """
     Parses the activity data strings from a Prolog file into a list of dictionaries.
     """
@@ -118,13 +131,13 @@ def parse_activities(data):
             start_time = int(start_time)
             duration = int(duration)
             activities.append({
-                'slug': slug.strip(),
+                'slug': prolog_atom(slug.strip()),
                 'start': start_time,
                 'end': start_time + duration  # Calculate the end time block.
             })
     return activities
 
-def check_availability(staff_intervals, activity):
+def check_availability(staff_intervals: List[List[int]], activity: Dict[str, Any]) -> int:
     """
     Checks if a staff member is available for a given activity.
     An availability of 1 means available, 0 means not available.
@@ -135,14 +148,14 @@ def check_availability(staff_intervals, activity):
             return 1
     return 0
 
-def generate_availability_predicates(staff_data, activity_data):
+def generate_availability_predicates(staff_data: Dict[str, List[List[int]]], activity_data: List[Dict[str, Any]]) -> str:
     """
     Generates individual Prolog 'available/2' predicates for each staff member
     who is available for a specific activity.
     """
     predicates = []
     staff_names = sorted(staff_data.keys())
-    
+
     # Iterate through each staff member and each activity
     for name in staff_names:
         intervals = staff_data.get(name, [])
@@ -152,53 +165,53 @@ def generate_availability_predicates(staff_data, activity_data):
                 activity_slug = activity['slug']
                 # Format: available('Staff Name', activity_slug).
                 predicates.append(f"available('{name}', {activity_slug}).")
-                
+
     return "\n".join(predicates)
 
-def generate_json_output(staff_data, activity_data):
+def generate_json_output(staff_data: Dict[str, List[List[int]]], activity_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """
     Generates the availability data as a list of dictionaries for JSON output.
     This creates a matrix-like structure within the JSON file.
     """
     staff_names = sorted(staff_data.keys())
     activity_slugs = [act['slug'] for act in activity_data]
-    
+
     json_result = []
     for name in staff_names:
         intervals = staff_data.get(name, [])
         # Create a row of 1s and 0s for the availability matrix.
         availability_row = [check_availability(intervals, act) for act in activity_data]
-        
+
         staff_entry = {
             "name": name,
             "availability": availability_row,
             "activities": activity_slugs
         }
         json_result.append(staff_entry)
-        
+
     return json_result
 
-def read_activities_from_file(filepath):
+def read_activities_from_file(filepath: Path) -> str:
     """
     Reads activity data from a Prolog file.
     """
-    print(f"Reading activities from {filepath}...")
+    logger.info(f"Reading activities from {filepath}...")
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             return f.read()
     except FileNotFoundError:
-        print(f"Error: Activity file not found at {filepath}")
+        logger.error(f"Error: Activity file not found at {filepath}")
         return ""
 
 if __name__ == "__main__":
-    # Define file paths for input and output.
-    activities_filepath = 'data_pl/activities.pl'
-    prolog_availability_filepath = 'data_pl/availability.pl'
-    json_availability_filepath = 'data_json/availability.json'
-    
+    # Define file paths for input and output using Path objects and defaults
+    activities_filepath = DEFAULT_OUTPUT_FOLDER / 'activities.pl'
+    prolog_availability_filepath = DEFAULT_OUTPUT_FOLDER / 'availability.pl'
+    json_availability_filepath = DEFAULT_JSON_FOLDER / 'availability.json'
+
     # Step 1: Fetch raw availability data from Lettuce Meet.
     staff_data_str = fetch_lettuce_meet_availability(LETTUCE_MEET_EVENT_ID)
-    
+
     # Step 2: Read activity definitions from a local file.
     activity_data_str = read_activities_from_file(activities_filepath)
 
@@ -212,18 +225,16 @@ if __name__ == "__main__":
         prolog_output = generate_availability_predicates(parsed_staff, parsed_activities)
         json_output = generate_json_output(parsed_staff, parsed_activities)
 
-        # Step 5: Write the generated content to files.
-        os.makedirs('data_pl', exist_ok=True)
-        os.makedirs('data_json', exist_ok=True)
-
+        # Step 5: Write the generated content to files using utility functions.
+        ensure_folder_exists(prolog_availability_filepath.parent)
         with open(prolog_availability_filepath, 'w', encoding='utf-8') as f:
             f.write(prolog_output)
-        print(f"\nProlog output successfully written to {prolog_availability_filepath}")
+        logger.info(f"Prolog output successfully written to {prolog_availability_filepath}")
 
+        ensure_folder_exists(json_availability_filepath.parent)
         with open(json_availability_filepath, 'w', encoding='utf-8') as f:
             json.dump(json_output, f, indent=4, ensure_ascii=False)
-        print(f"JSON output successfully written to {json_availability_filepath}")
-        
-    else:
-        print("\nCould not generate output files. Check for errors above.")
+        logger.info(f"JSON output successfully written to {json_availability_filepath}")
 
+    else:
+        logger.info("\nCould not generate output files. Check for errors above.")

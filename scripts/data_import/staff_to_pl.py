@@ -55,7 +55,7 @@ def convert_json_to_prolog(
     Reads staff data from a JSON file and converts it into Prolog facts,
     writing them to an output .pl file.
     """
-    validate_file_exists(input_json_path)  # Now correctly passes input_json_path
+    validate_file_exists(input_json_path)
     ensure_folder_exists(output_prolog_path.parent)
 
     with input_json_path.open(encoding="utf-8") as json_file:
@@ -69,30 +69,38 @@ def convert_json_to_prolog(
             out.write("% No staff data found to convert.\n")
         return
 
-    # Define the module and its exported predicates
-    module_header = ":- module(staff, [staff/3, preference/3]).\n\n"
-
     with output_prolog_path.open("w", encoding="utf-8") as out:
-        out.write(module_header)
+        out.write(":- module(staff, [staff/3, preference/3]).\n\n")
         out.write("% ############## Staff Data ##############\n\n")
-
         for staff_member in staff_members:
-            prolog_facts = format_staff_member_to_prolog(staff_member)
-            out.write(prolog_facts)
+            try:
+                prolog_fact = format_staff_member_to_prolog(staff_member)
+                out.write(prolog_fact)
+            except Exception as e:
+                logger.error(
+                    f"Error converting staff member {staff_member.get('name', 'Unknown')}: {e}"
+                )
+                raise
 
     logger.info(
-        f"✔ Successfully converted staff JSON to Prolog: {output_prolog_path.resolve()}"
+        f"Successfully converted staff data from {input_json_path.name} to "
+        f"Prolog facts in {output_prolog_path.resolve()}."
     )
 
 
-# --- CLI Entry Point ---
+# -------------------------
+# Entry Point
+# -------------------------
 def main() -> None:
-    """Command-line interface entry point for converting staff JSON to Prolog."""
+    """Main function for converting staff JSON to Prolog."""
     parser = argparse.ArgumentParser(
         description="Convert staff JSON data to Prolog facts."
     )
     parser.add_argument(
-        "input_file", help="Input staff JSON filename (e.g., 'staff.json')"
+        "input_file",
+        nargs="?",  # Make input_file optional
+        default="staff.json",  # Set default value
+        help="Input staff JSON filename (default: 'staff.json')",
     )
     parser.add_argument(
         "-i",
@@ -127,7 +135,7 @@ def main() -> None:
     except json.JSONDecodeError as e:
         logger.error(f"❌ JSON decoding error. Ensure input JSON is well-formed: {e}")
     except Exception as e:
-        logger.error(f"❌ An unexpected error occurred: {e}", exc_info=True)
+        logger.exception(f"❌ An unexpected error occurred: {e}")
 
 
 if __name__ == "__main__":

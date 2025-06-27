@@ -2,6 +2,12 @@ import csv
 from pathlib import Path
 import argparse
 from typing import Dict, Any, List, Callable
+import logging
+
+# --- Logger Setup ---
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+
 
 from utilities import (
     DEFAULT_INPUT_FOLDER,
@@ -62,17 +68,21 @@ def convert_csv_to_json(
     ensure_folder_exists(json_path.parent)
 
     parsed_data = []
-
     with input_path.open(newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
-        for i, row in enumerate(reader, start=2):
+        for i, row in enumerate(reader, start=2):  # Start at 2 for header + first row
             try:
-                parsed = parser(row)
-                parsed_data.append(parsed)
-            except Exception as e:
+                parsed_data.append(parser(row))
+            except ValueError as e:
+                logger.error(f"Error on CSV row {i}: {e}\nRow data: {row}")
                 raise ValueError(f"Error on CSV row {i}: {e}\nRow data: {row}")
 
     export_json_data(parsed_data, json_path, top_level_json_key)
+
+    logger.info(
+        f"Successfully converted data from {input_path.name} to "
+        f"JSON in {json_path.resolve()}."
+    )
 
 
 # -------------------------
@@ -114,9 +124,12 @@ def main() -> None:
 
     try:
         convert_csv_to_json(input_path, json_path, parse_activity_row, args.json_key)
-        print(f"✔ Successfully generated JSON: {json_path}")
+    except FileNotFoundError as e:
+        logger.error(f"❌ File error: {e}")
+    except ValueError as e:
+        logger.error(f"❌ Data parsing error: {e}")
     except Exception as e:
-        print(f"❌ Error: {e}")
+        logger.exception(f"❌ An unexpected error occurred: {e}")
 
 
 if __name__ == "__main__":

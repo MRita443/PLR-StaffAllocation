@@ -11,6 +11,7 @@ from utilities import (
     DEFAULT_INPUT_FOLDER,
     validate_file_exists,
     ensure_folder_exists,
+    export_json_data
 )
 
 # --- Logger Setup ---
@@ -157,9 +158,7 @@ def parse_staff_row(
     skills = [normalize_slug(s) for s in row[4].split(",") if s.strip()]
 
     # Initialize preferences for all valid slugs to None
-    preferences: Dict[str, Optional[int]] = {
-        slug: None for slug in all_valid_activity_slugs
-    }
+    preferences: Dict[str, Optional[int]] = { slug: None for slug in all_valid_activity_slugs }
 
     # Populate initial preferences directly from CSV columns using mapped_header_info
     # mapped_header_info provides (target_slug_for_header, column_index)
@@ -168,7 +167,7 @@ def parse_staff_row(
             val = row[col_idx].strip()
             if val.isdigit():
                 preferences[target_slug] = int(val)
-        # If val is not digit or column is out of bounds, preference remains None
+            # If val is not digit or column is out of bounds, preference remains None
 
     # Apply propagation rules to fill in missing preferences
     propagate_preferences(preferences, all_valid_activity_slugs)
@@ -185,145 +184,118 @@ def parse_staff_row(
 def parse_staff_csv(
     file_path: Path, valid_activity_slugs: Optional[List[str]] = None
 ) -> List[Dict[str, Any]]:
-    """Parses staff data from a CSV file."""
-    staff_members: List[Dict[str, Any]] = []
-
-    all_valid_activity_slugs = (
-        valid_activity_slugs if valid_activity_slugs is not None else []
-    )
-
+    """
+    Parses staff data from a CSV file.
+    """
     validate_file_exists(file_path)
+    staff_data: List[Dict[str, Any]] = []
 
-    with file_path.open(newline="", encoding="utf-8") as csvfile:
-        reader = csv.reader(csvfile)
+    with file_path.open(newline="", encoding="utf-8") as f:
+        reader = csv.reader(f)
         headers = next(reader)  # Read header row
+        # logger.debug(f"CSV Headers: {headers}")
 
-        # Extract event slugs and their column indices based on headers
-        mapped_header_info, original_header_base_slugs = (
-            extract_event_slugs_and_indices(headers, all_valid_activity_slugs)
+        mapped_header_info, original_header_base_slugs = extract_event_slugs_and_indices(
+            headers, valid_activity_slugs
         )
 
-        if not mapped_header_info and all_valid_activity_slugs:
-            logger.warning(
-                "No valid event columns found in CSV headers that match activities data."
-            )
-        elif not all_valid_activity_slugs:
+        # Log identified activities for debugging
+        if mapped_header_info:
             logger.info(
-                "No activities JSON provided. Skill validation and preference propagation will be limited."
+                f"Identified {len(mapped_header_info)} activity preference columns: "
+                f"{[(slug, idx) for slug, idx in mapped_header_info]}"
             )
+        else:
+            logger.warning("No activity preference columns identified in CSV headers.")
 
-        for row in reader:
-            staff_member = parse_staff_row(
-                row, mapped_header_info, all_valid_activity_slugs
-            )
-            if staff_member is not None:
-                staff_members.append(staff_member)
+        for i, row in enumerate(reader, start=2):  # Enumerate from 2 for row number
+            if not any(row):  # Skip entirely empty rows
+                continue
+            try:
+                staff_member = parse_staff_row(
+                    row, mapped_header_info, valid_activity_slugs or []
+                )
+                if staff_member:
+                    staff_data.append(staff_member)
+            except Exception as e:
+                logger.error(
+                    f"Error parsing row {i}: {row}. Error: {e}", exc_info=True
+                )
+                continue  # Skip this row and continue with the next
 
-    return staff_members
+    if not staff_data:
+        logger.warning(f"No valid staff data parsed from file: {file_path}")
 
-
-# --- Skills Validation ---
-def extract_activity_skills(activities_data: Dict[str, Any]) -> Set[str]:
-    """Extracts all unique skills required by activities."""
-    skills_set: Set[str] = set()
-    for activity in activities_data.get("activity", []):
-        skills_set.update(activity.get("skills", []))
-    return skills_set
-
-
-def extract_staff_skills(staff_data: List[Dict[str, Any]]) -> Set[str]:
-    """Extracts all unique skills possessed by staff members."""
-    skills_set: Set[str] = set()
-    for member in staff_data:
-        skills_set.update(member.get("skills", []))
-    return skills_set
+    return staff_data
 
 
-def validate_skills(
-    staff_data: List[Dict[str, Any]], activities_data: Dict[str, Any]
-) -> None:
-    """Compares and logs discrepancies between staff and activity skills."""
-    activity_skills = extract_activity_skills(activities_data)
-    staff_skills = extract_staff_skills(staff_data)
-
-    extra_staff_skills = staff_skills - activity_skills
-    if extra_staff_skills:
-        logger.warning(
-            f"Staff members have skills not required by any activity: {sorted(list(extra_staff_skills))}"
-        )
-
-    missing_activity_skills = activity_skills - staff_skills
-    if missing_activity_skills:
-        logger.warning(
-            f"Activities require skills not found in any staff member: {sorted(list(missing_activity_skills))}"
-        )
-
-
-# --- JSON Export & Activities Loading ---
-def export_staff_to_json(staff_data: List[Dict[str, Any]], json_path: Path) -> None:
-    """Exports staff data to a JSON file."""
-    ensure_folder_exists(json_path.parent)
-    with json_path.open("w", encoding="utf-8") as jf:
-        json.dump({"staff": staff_data}, jf, indent=2, ensure_ascii=False)
+def get_all_activity_slugs_from_json(json_path: Path) -> List[str]:
+    """
+    Reads activity slugs from a JSON file (e.g., activities.json).
+    Assumes the JSON structure is a dictionary with a key 'activity'
+    containing a list of activity dictionaries, each with a 'slug' key.
+    """
+    try:
+        validate_file_exists(json_path)
+        with json_path.open(encoding="utf-8") as f:
+            data = json.load(f)
+        activities = data.get("activity", [])
+        slugs = sorted([activity["slug"] for activity in activities if "slug" in activity])
+        logger.info(f"Loaded {len(slugs)} activity slugs from {json_path.name}")
+        # logger.debug(f"Activity Slugs: {slugs}")
+        return slugs
+    except FileNotFoundError:
+        logger.warning(f"Activities JSON file not found: {json_path}. Cannot validate skills against activities.")
+        return []
+    except json.JSONDecodeError as e:
+        logger.error(f"Error decoding activities JSON from {json_path}: {e}")
+        return []
+    except KeyError as e:
+        logger.error(f"Missing expected key in activities JSON from {json_path}: {e}")
+        return []
 
 
-def load_activities_json(activities_json_path: Path) -> Dict[str, Any]:
-    """Loads and validates the activities JSON file."""
-    validate_file_exists(activities_json_path)
-    with activities_json_path.open(encoding="utf-8") as f:
-        return json.load(f)
-
-
-def get_activities_json_path(provided_path: Optional[Path]) -> Optional[Path]:
-    """Determines the path to the activities JSON file, checking default if not provided."""
-    if provided_path:
-        return provided_path
-
-    default_path = DEFAULT_JSON_FOLDER / "activities.json"
-    if default_path.exists():
-        logger.info(f"Using default activities JSON: {default_path.resolve()}")
-        return default_path
-
-    logger.warning(
-        "Activities JSON file not provided and default not found. Skill validation and detailed slug checks will be skipped."
-    )
-    return None
-
-
-# --- Main Conversion Function ---
 def process_staff_data(
-    input_csv_path: Path,
-    output_json_path: Path,
-    activities_json_path: Optional[Path] = None,
+    input_csv_path: Path, output_json_path: Path, activities_json_path: Optional[Path]
 ) -> None:
     """
-    Main function to process staff CSV data, validate skills against activities,
-    and export to a JSON file.
+    Orchestrates the process of reading staff CSV, validating against activities,
+    and exporting to JSON.
     """
-    activities_data: Optional[Dict[str, Any]] = None
-    valid_activity_slugs: List[str] = []
-
-    resolved_activities_json_path = get_activities_json_path(activities_json_path)
-    if resolved_activities_json_path:
-        activities_data = load_activities_json(resolved_activities_json_path)
-        valid_activity_slugs = [
-            act["slug"] for act in activities_data.get("activity", [])
-        ]
-
-    staff_members = parse_staff_csv(input_csv_path, valid_activity_slugs)
-
-    if activities_data:
-        validate_skills(staff_members, activities_data)
-
-    export_staff_to_json(staff_members, output_json_path)
-    logger.info(f"✔ Staff data successfully saved to: {output_json_path.resolve()}")
+    all_valid_activity_slugs: List[str] = []
+    if activities_json_path:
+        all_valid_activity_slugs = get_all_activity_slugs_from_json(activities_json_path)
+        if not all_valid_activity_slugs:
+            logger.warning(
+                f"No valid activity slugs found in {activities_json_path}. "
+                "Skill and preference validation may be limited."
+            )
+    else:
+        logger.info("No activities JSON path provided. Skipping skill validation against known activities.")
 
 
-# --- CLI Entry Point ---
+    staff_data = parse_staff_csv(input_csv_path, all_valid_activity_slugs)
+
+    if staff_data:
+        ensure_folder_exists(output_json_path.parent)
+        export_json_data(
+            staff_data, output_json_path, "staff"
+        )
+        logger.info(
+            f"Successfully converted staff data from {input_csv_path.name} to "
+            f"JSON in {output_json_path.resolve()}."
+        )
+    else:
+        logger.warning(f"No staff data to write to JSON from {input_csv_path.name}.")
+
+
+# -------------------------
+# Entry Point
+# -------------------------
 def main() -> None:
-    """Command-line interface entry point for processing staff data."""
+    """Main function for importing staff CSV and exporting to JSON."""
     parser = argparse.ArgumentParser(
-        description="Parse staff CSV, validate skills, and export to JSON."
+        description="Convert staff CSV data to JSON format, with optional activity validation."
     )
     parser.add_argument(
         "input_file", help="Input staff CSV filename (e.g., 'staff.csv')"
@@ -351,7 +323,7 @@ def main() -> None:
     parser.add_argument(
         "-a",
         "--activities-json",
-        default=None,
+        default=f"{DEFAULT_JSON_FOLDER.name}/activities.json",
         type=Path,
         help="Path to activities JSON for skill validation and comprehensive slug checks (optional)",
     )
@@ -370,7 +342,7 @@ def main() -> None:
             f"❌ JSON decoding error. Ensure activities JSON is well-formed: {e}"
         )
     except Exception as e:
-        logger.error(f"❌ An unexpected error occurred: {e}", exc_info=True)
+        logger.exception(f"❌ An unexpected error occurred: {e}")
 
 
 if __name__ == "__main__":
