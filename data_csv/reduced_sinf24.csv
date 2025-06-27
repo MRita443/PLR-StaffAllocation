@@ -3,13 +3,10 @@ workshop_react_next_1,2,1,10:00:00,120,react|next|teaching|program
 workshop_react_next_2,2,1,14:30:00,120,react|next|teaching|program
 coffee_break_1,3,1,16:30:00,30,operations
 escape_room_1,2,1,17:00:00,45,program
-escape_room_2,2,1,17:45:00,45,program
 talk_visual_design,1,2,14:30:00,60,program
 panel_pi,1,2,17:00:00,60,program
-talk_haskell,1,2,18:00:00,30,program
-escape_room_3,2,2,13:45:00,45,program
-escape_room_4,2,2,14:30:00,45,program
-escape_room_5,2,2,15:15:00,45,program
+escape_room_2,2,2,13:45:00,45,program
+escape_room_3,2,2,14:30:00,45,program
 talk_chess,1,3,15:30:00,45,program
 talk_design_ai,1,3,17:30:00,60,program
 workshop_github_actions,2,3,14:00:00,90,github_actions|teaching|program
