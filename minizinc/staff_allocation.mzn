@@ -106,7 +106,7 @@ float: w4;
 solve :: int_search(
     x,                % The array of variables to search on
     first_fail,       % Variable selection heuristic
-    indomain_max,     % Value selection heuristic
+    indomain_random,     % Value selection heuristic
     complete          % Specifies a complete search
 )
 maximize w1 * u1 + w2 * u2 + w3 * u3 - w4 * u4;

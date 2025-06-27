@@ -12,9 +12,7 @@
             0,
             0,
             0,
-            1,
-            1,
-            0
+            1
         ],
         "activities": [
             "workshop_react_next_1",
@@ -27,9 +25,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -45,8 +41,6 @@
             0,
             0,
             1,
-            0,
-            1,
             0
         ],
         "activities": [
@@ -60,9 +54,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -78,9 +70,7 @@
             1,
             1,
             0,
-            1,
-            0,
-            0
+            1
         ],
         "activities": [
             "workshop_react_next_1",
@@ -93,9 +83,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -111,8 +99,6 @@
             1,
             1,
             1,
-            1,
-            1,
             1
         ],
         "activities": [
@@ -126,9 +112,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -144,8 +128,6 @@
             0,
             0,
             0,
-            0,
-            0,
             0
         ],
         "activities": [
@@ -159,9 +141,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -177,9 +157,7 @@
             0,
             1,
             0,
-            1,
-            0,
-            0
+            1
         ],
         "activities": [
             "workshop_react_next_1",
@@ -192,9 +170,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -210,8 +186,6 @@
             1,
             0,
             0,
-            0,
-            0,
             0
         ],
         "activities": [
@@ -225,9 +199,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -243,8 +215,6 @@
             1,
             1,
             1,
-            1,
-            1,
             1
         ],
         "activities": [
@@ -258,9 +228,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -276,8 +244,6 @@
             1,
             1,
             1,
-            1,
-            1,
             1
         ],
         "activities": [
@@ -291,9 +257,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -309,8 +273,6 @@
             0,
             1,
             1,
-            1,
-            1,
             1
         ],
         "activities": [
@@ -324,9 +286,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -342,9 +302,7 @@
             0,
             0,
             1,
-            0,
-            1,
-            1
+            0
         ],
         "activities": [
             "workshop_react_next_1",
@@ -357,9 +315,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -375,8 +331,6 @@
             0,
             0,
             0,
-            0,
-            0,
             0
         ],
         "activities": [
@@ -390,9 +344,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -408,8 +360,6 @@
             0,
             1,
             1,
-            1,
-            1,
             1
         ],
         "activities": [
@@ -423,9 +373,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -441,8 +389,6 @@
             0,
             0,
             1,
-            1,
-            0,
             1
         ],
         "activities": [
@@ -456,9 +402,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -474,9 +418,7 @@
             0,
             0,
             0,
-            1,
-            0,
-            0
+            1
         ],
         "activities": [
             "workshop_react_next_1",
@@ -489,9 +431,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -507,8 +447,6 @@
             1,
             1,
             1,
-            1,
-            1,
             1
         ],
         "activities": [
@@ -522,9 +460,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -540,9 +476,7 @@
             0,
             1,
             1,
-            0,
-            1,
-            1
+            0
         ],
         "activities": [
             "workshop_react_next_1",
@@ -555,9 +489,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -573,8 +505,6 @@
             0,
             0,
             1,
-            1,
-            1,
             1
         ],
         "activities": [
@@ -588,9 +518,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -606,8 +534,6 @@
             0,
             0,
             0,
-            0,
-            0,
             0
         ],
         "activities": [
@@ -621,9 +547,7 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
         ]
     },
     {
@@ -639,6 +563,33 @@
             0,
             1,
             0,
+            0
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "workshop_react_next_2",
+            "coffee_break_1",
+            "escape_room_1",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_haskell",
+            "escape_room_2",
+            "escape_room_3",
+            "talk_chess",
+            "talk_design_ai"
+        ]
+    },
+    {
+        "name": "Miguel Garrido",
+        "availability": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0
@@ -654,9 +605,326 @@
             "escape_room_2",
             "escape_room_3",
             "talk_chess",
-            "talk_design_ai",
-            "workshop_github_actions",
-            "coffee_break_2"
+            "talk_design_ai"
+        ]
+    },
+    {
+        "name": "Miguel Moita",
+        "availability": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "workshop_react_next_2",
+            "coffee_break_1",
+            "escape_room_1",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_haskell",
+            "escape_room_2",
+            "escape_room_3",
+            "talk_chess",
+            "talk_design_ai"
+        ]
+    },
+    {
+        "name": "Nery",
+        "availability": [
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "workshop_react_next_2",
+            "coffee_break_1",
+            "escape_room_1",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_haskell",
+            "escape_room_2",
+            "escape_room_3",
+            "talk_chess",
+            "talk_design_ai"
+        ]
+    },
+    {
+        "name": "Pedro Vidal",
+        "availability": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "workshop_react_next_2",
+            "coffee_break_1",
+            "escape_room_1",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_haskell",
+            "escape_room_2",
+            "escape_room_3",
+            "talk_chess",
+            "talk_design_ai"
+        ]
+    },
+    {
+        "name": "Rita Cachaldora",
+        "availability": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "workshop_react_next_2",
+            "coffee_break_1",
+            "escape_room_1",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_haskell",
+            "escape_room_2",
+            "escape_room_3",
+            "talk_chess",
+            "talk_design_ai"
+        ]
+    },
+    {
+        "name": "Rubem Neto",
+        "availability": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "workshop_react_next_2",
+            "coffee_break_1",
+            "escape_room_1",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_haskell",
+            "escape_room_2",
+            "escape_room_3",
+            "talk_chess",
+            "talk_design_ai"
+        ]
+    },
+    {
+        "name": "Ruben Esteves",
+        "availability": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "workshop_react_next_2",
+            "coffee_break_1",
+            "escape_room_1",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_haskell",
+            "escape_room_2",
+            "escape_room_3",
+            "talk_chess",
+            "talk_design_ai"
+        ]
+    },
+    {
+        "name": "Rui Silveira",
+        "availability": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "workshop_react_next_2",
+            "coffee_break_1",
+            "escape_room_1",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_haskell",
+            "escape_room_2",
+            "escape_room_3",
+            "talk_chess",
+            "talk_design_ai"
+        ]
+    },
+    {
+        "name": "Solange",
+        "availability": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "workshop_react_next_2",
+            "coffee_break_1",
+            "escape_room_1",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_haskell",
+            "escape_room_2",
+            "escape_room_3",
+            "talk_chess",
+            "talk_design_ai"
+        ]
+    },
+    {
+        "name": "Tomás Figueiredo Marques Palma",
+        "availability": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "workshop_react_next_2",
+            "coffee_break_1",
+            "escape_room_1",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_haskell",
+            "escape_room_2",
+            "escape_room_3",
+            "talk_chess",
+            "talk_design_ai"
+        ]
+    },
+    {
+        "name": "Tomás Ramos",
+        "availability": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "workshop_react_next_2",
+            "coffee_break_1",
+            "escape_room_1",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_haskell",
+            "escape_room_2",
+            "escape_room_3",
+            "talk_chess",
+            "talk_design_ai"
+        ]
+    },
+    {
+        "name": "Vítor Pires",
+        "availability": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+        ],
+        "activities": [
+            "workshop_react_next_1",
+            "workshop_react_next_2",
+            "coffee_break_1",
+            "escape_room_1",
+            "talk_visual_design",
+            "panel_pi",
+            "talk_haskell",
+            "escape_room_2",
+            "escape_room_3",
+            "talk_chess",
+            "talk_design_ai"
         ]
     }
 ]

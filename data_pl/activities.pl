@@ -13,5 +13,3 @@ activity(escape_room_2, 2, 151, 3, [program]).
 activity(escape_room_3, 2, 154, 3, [program]).
 activity(talk_chess, 1, 254, 3, [program]).
 activity(talk_design_ai, 1, 262, 4, [program]).
-activity(workshop_github_actions, 2, 248, 6, [github_actions, teaching, program]).
-activity(coffee_break_2, 3, 258, 2, [operations]).

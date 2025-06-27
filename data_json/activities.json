@@ -104,26 +104,6 @@
       "skills": [
         "program"
       ]
-    },
-    {
-      "slug": "workshop_github_actions",
-      "min_staff": 2,
-      "start_time": 248,
-      "duration": 6,
-      "skills": [
-        "github_actions",
-        "teaching",
-        "program"
-      ]
-    },
-    {
-      "slug": "coffee_break_2",
-      "min_staff": 3,
-      "start_time": 258,
-      "duration": 2,
-      "skills": [
-        "operations"
-      ]
     }
   ]
 }
