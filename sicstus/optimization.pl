@@ -55,26 +55,22 @@ sum_activity_diversity([ActivityCol | RestCols], StaffExperience, TotalDiversity
     TotalDiversity #= ActivityDiversity + RestDiversity.
 
 calculate_activity_diversity(ActivityColumn, StaffExperience, DiversityScore) :-
-    BigM = 10000, % A sufficiently large number.
-    build_max_experience_terms(ActivityColumn, StaffExperience, MaxTerms),
-    build_min_experience_terms(ActivityColumn, StaffExperience, BigM, MinTerms),
+    build_experience_terms(ActivityColumn, StaffExperience, ExperienceTerms),
 
-    maximum(MaxExperience, MaxTerms),
-    minimum(MinExperience, MinTerms),
+    maximum(MaxExperience, ExperienceTerms),
+    minimum(MinExperience, ExperienceTerms),
 
     sum(ActivityColumn, #=, NumAssigned),
     (NumAssigned #= 0) #=> (DiversityScore #= 0),
     (NumAssigned #> 0) #=> (DiversityScore #= MaxExperience - MinExperience).
 
-build_max_experience_terms([], [], []).
-build_max_experience_terms([AllocVar | RestAlloc], [Exp | RestExp], [Term | RestTerms]) :-
-    Term #= AllocVar * Exp,
-    build_max_experience_terms(RestAlloc, RestExp, RestTerms).
-
-build_min_experience_terms([], [], _, []).
-build_min_experience_terms([AllocVar | RestAlloc], [Exp | RestExp], BigM, [Term | RestTerms]) :-
-    Term #= (1 - AllocVar) * BigM + Exp,
-    build_min_experience_terms(RestAlloc, RestExp, BigM, RestTerms).
+build_experience_terms([], [], []).
+build_experience_terms([AllocVar | RestAlloc], [Exp | RestExp], [Exp | RestFiltered]) :-
+    AllocVar #= 1,
+    build_experience_terms(RestAlloc, RestExp, RestFiltered).
+build_experience_terms([AllocVar | RestAlloc], [_ | RestExp], RestFiltered) :-
+    AllocVar #= 0,
+    build_experience_terms(RestAlloc, RestExp, RestFiltered).
 
 % selRandomValue(+Var, +Rest, +BB0, -BB1)
 selRandomValue(Var, _, BB0, BB1):-

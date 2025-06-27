@@ -36,8 +36,8 @@ PROLOG_SOURCE_FILES = [
     'sicstus/solver.pl',
     'sicstus/optimization.pl',
     'sicstus/constraints.pl',
-    'sicstus/data.pl',
-    'sicstus/utils.pl'
+    'sicstus/utils.pl',
+    'sicstus/data_utils.pl'
 ]
 
 CSV_FIELDNAMES = [
@@ -176,7 +176,7 @@ def run_prolog_solver(var_order: str, value_selection: str, value_order: Optiona
     """
     labeling_options = build_labeling_strategy(var_order, value_selection, value_order)
     strategy_name = _format_prolog_options(labeling_options)
-    prolog_query = f"main({strategy_name}), halt."
+    prolog_query = f"main_stats({strategy_name}), halt."
     
     cmd = [
         'sicstus',

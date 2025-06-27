@@ -1,3 +1,5 @@
+:- module(availability, [available/2]).
+
 available('André Lima', workshop_react_next_1).
 available('André Lima', escape_room).
 available('André Lima', workshop_react_next_2).
