@@ -1,0 +1,31 @@
+Carimbo de data/hora,Endereço de email,Nome,Quantas vezes já participaste na organização deste evento?,"Quais destas skills consideras que possuis? Seleciona o teu departamento e outras skills relevantes.
+
+(Nota Editor: Coloca exatamente como as skills no csv de atividades, com a possível diferença de maiúsculas/minúsculas e _)","Indica a tua preferência por ser alocado a cada um dos seguintes eventos ou tipos de eventos:
+
+(Nota Editor: Coloca exatamente como os slugs no csv de atividades, com a possível diferença de maiúsculas/minúsculas e _. No caso de slugs repetidas do tipo coffee_break_2 coloca só uma vez Coffee Break) [Workshop React Next]","Indica a tua preferência por ser alocado a cada um dos seguintes eventos ou tipos de eventos:
+
+(Nota Editor: Coloca exatamente como os slugs no csv de atividades, com a possível diferença de maiúsculas/minúsculas e _. No caso de slugs repetidas do tipo coffee_break_2 coloca só uma vez Coffee Break) [Workshop Github Actions]","Indica a tua preferência por ser alocado a cada um dos seguintes eventos ou tipos de eventos:
+
+(Nota Editor: Coloca exatamente como os slugs no csv de atividades, com a possível diferença de maiúsculas/minúsculas e _. No caso de slugs repetidas do tipo coffee_break_2 coloca só uma vez Coffee Break) [Escape Room]","Indica a tua preferência por ser alocado a cada um dos seguintes eventos ou tipos de eventos:
+
+(Nota Editor: Coloca exatamente como os slugs no csv de atividades, com a possível diferença de maiúsculas/minúsculas e _. No caso de slugs repetidas do tipo coffee_break_2 coloca só uma vez Coffee Break) [Coffee Break]","Indica a tua preferência por ser alocado a cada um dos seguintes eventos ou tipos de eventos:
+
+(Nota Editor: Coloca exatamente como os slugs no csv de atividades, com a possível diferença de maiúsculas/minúsculas e _. No caso de slugs repetidas do tipo coffee_break_2 coloca só uma vez Coffee Break) [Talk Visual Design]","Indica a tua preferência por ser alocado a cada um dos seguintes eventos ou tipos de eventos:
+
+(Nota Editor: Coloca exatamente como os slugs no csv de atividades, com a possível diferença de maiúsculas/minúsculas e _. No caso de slugs repetidas do tipo coffee_break_2 coloca só uma vez Coffee Break) [Talk Haskell]","Indica a tua preferência por ser alocado a cada um dos seguintes eventos ou tipos de eventos:
+
+(Nota Editor: Coloca exatamente como os slugs no csv de atividades, com a possível diferença de maiúsculas/minúsculas e _. No caso de slugs repetidas do tipo coffee_break_2 coloca só uma vez Coffee Break) [Talk Chess]","Indica a tua preferência por ser alocado a cada um dos seguintes eventos ou tipos de eventos:
+
+(Nota Editor: Coloca exatamente como os slugs no csv de atividades, com a possível diferença de maiúsculas/minúsculas e _. No caso de slugs repetidas do tipo coffee_break_2 coloca só uma vez Coffee Break) [Talk Design AI]","Indica a tua preferência por ser alocado a cada um dos seguintes eventos ou tipos de eventos:
+
+(Nota Editor: Coloca exatamente como os slugs no csv de atividades, com a possível diferença de maiúsculas/minúsculas e _. No caso de slugs repetidas do tipo coffee_break_2 coloca só uma vez Coffee Break) [Panel PI]"
+2025/06/21 16:28:59,up202108674@g.uporto.pt,André Lima,3,"Next, Teaching, Program, Operations",1,2,3,,5,4,3,1,0
+2025/06/21 16:40:30,up202108044@g.uporto.pt,António Santos,3,"Next, Teaching, Operations",0,2,3,,2,0,4,2,5
+2025/06/21 16:16:34,up202108674@g.uporto.pt,Beatriz Ferreira,1,"Next, Program, Github Actions",2,2,4,4,1,3,4,0,5
+2025/06/21 16:15:35,up202108674@g.uporto.pt,Bruno Oliveira,3,"Teaching, Operations, Github Actions",3,4,2,3,1,1,,3,2
+2025/06/21 16:42:05,up202108044@g.uporto.pt,Clara,1,"React, Next, Teaching, Program, Operations, Github Actions",1,3,1,5,2,0,3,1,2
+2025/06/21 16:46:43,up202108044@g.uporto.pt,Diogo Fernandes,5,Next,0,0,0,0,5,0,1,0,0
+2025/06/21 16:27:59,up202108674@g.uporto.pt,Eduarda Magno,4,"React, Next, Operations, Github Actions",0,2,4,,4,2,0,1,5
+2025/06/21 16:18:08,up202108674@g.uporto.pt,Francisco Cardoso,1,"Next, Teaching, Program",1,3,1,3,5,1,2,4,1
+2025/06/21 16:46:24,up202108044@g.uporto.pt,Goiana,3,"React, Next, Teaching, Program, Operations, Github Actions",2,1,3,5,5,3,4,3,0
+2025/06/21 16:22:23,up202108674@g.uporto.pt,Guilherme Santos,4,"React, Teaching, Program, Operations",0,2,0,1,1,3,3,1,4

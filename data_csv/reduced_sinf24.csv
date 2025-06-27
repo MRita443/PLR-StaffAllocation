@@ -1,0 +1,9 @@
+Slug,Min Staff,Day,Start Time,Duration (min),Skills
+workshop_react_next_1,2,1,10:00:00,120,react|next|teaching|program
+escape_room,2,1,13:00:00,45,program
+workshop_react_next_2,2,1,14:30:00,120,react|next|teaching|program
+talk_visual_design,1,2,14:30:00,60,program
+panel_pi,1,2,17:00:00,60,program
+talk_chess,1,3,15:30:00,45,program
+workshop_github_actions,2,3,14:00:00,90,github_actions|teaching|program
+coffee_break,3,3,16:30:00,30,operations

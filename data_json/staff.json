@@ -1,0 +1,211 @@
+{
+  "staff": [
+    {
+      "name": "André Lima",
+      "email": "up202108674@g.uporto.pt",
+      "experience": 3,
+      "skills": [
+        "next",
+        "teaching",
+        "program",
+        "operations"
+      ],
+      "preferences": {
+        "workshop_react_next_1": 1,
+        "escape_room": 3,
+        "workshop_react_next_2": 1,
+        "talk_visual_design": 5,
+        "panel_pi": 0,
+        "talk_chess": 3,
+        "workshop_github_actions": 2,
+        "coffee_break": null
+      }
+    },
+    {
+      "name": "António Santos",
+      "email": "up202108044@g.uporto.pt",
+      "experience": 3,
+      "skills": [
+        "next",
+        "teaching",
+        "operations"
+      ],
+      "preferences": {
+        "workshop_react_next_1": 0,
+        "escape_room": 3,
+        "workshop_react_next_2": 0,
+        "talk_visual_design": 2,
+        "panel_pi": 5,
+        "talk_chess": 4,
+        "workshop_github_actions": 2,
+        "coffee_break": null
+      }
+    },
+    {
+      "name": "Beatriz Ferreira",
+      "email": "up202108674@g.uporto.pt",
+      "experience": 1,
+      "skills": [
+        "next",
+        "program",
+        "github_actions"
+      ],
+      "preferences": {
+        "workshop_react_next_1": 2,
+        "escape_room": 4,
+        "workshop_react_next_2": 2,
+        "talk_visual_design": 1,
+        "panel_pi": 5,
+        "talk_chess": 4,
+        "workshop_github_actions": 2,
+        "coffee_break": 4
+      }
+    },
+    {
+      "name": "Bruno Oliveira",
+      "email": "up202108674@g.uporto.pt",
+      "experience": 3,
+      "skills": [
+        "teaching",
+        "operations",
+        "github_actions"
+      ],
+      "preferences": {
+        "workshop_react_next_1": 3,
+        "escape_room": 2,
+        "workshop_react_next_2": 3,
+        "talk_visual_design": 1,
+        "panel_pi": 2,
+        "talk_chess": null,
+        "workshop_github_actions": 4,
+        "coffee_break": 3
+      }
+    },
+    {
+      "name": "Clara",
+      "email": "up202108044@g.uporto.pt",
+      "experience": 1,
+      "skills": [
+        "react",
+        "next",
+        "teaching",
+        "program",
+        "operations",
+        "github_actions"
+      ],
+      "preferences": {
+        "workshop_react_next_1": 1,
+        "escape_room": 1,
+        "workshop_react_next_2": 1,
+        "talk_visual_design": 2,
+        "panel_pi": 2,
+        "talk_chess": 3,
+        "workshop_github_actions": 3,
+        "coffee_break": 5
+      }
+    },
+    {
+      "name": "Diogo Fernandes",
+      "email": "up202108044@g.uporto.pt",
+      "experience": 5,
+      "skills": [
+        "next"
+      ],
+      "preferences": {
+        "workshop_react_next_1": 0,
+        "escape_room": 0,
+        "workshop_react_next_2": 0,
+        "talk_visual_design": 5,
+        "panel_pi": 0,
+        "talk_chess": 1,
+        "workshop_github_actions": 0,
+        "coffee_break": 0
+      }
+    },
+    {
+      "name": "Eduarda Magno",
+      "email": "up202108674@g.uporto.pt",
+      "experience": 4,
+      "skills": [
+        "react",
+        "next",
+        "operations",
+        "github_actions"
+      ],
+      "preferences": {
+        "workshop_react_next_1": 0,
+        "escape_room": 4,
+        "workshop_react_next_2": 0,
+        "talk_visual_design": 4,
+        "panel_pi": 5,
+        "talk_chess": 0,
+        "workshop_github_actions": 2,
+        "coffee_break": null
+      }
+    },
+    {
+      "name": "Francisco Cardoso",
+      "email": "up202108674@g.uporto.pt",
+      "experience": 1,
+      "skills": [
+        "next",
+        "teaching",
+        "program"
+      ],
+      "preferences": {
+        "workshop_react_next_1": 1,
+        "escape_room": 1,
+        "workshop_react_next_2": 1,
+        "talk_visual_design": 5,
+        "panel_pi": 1,
+        "talk_chess": 2,
+        "workshop_github_actions": 3,
+        "coffee_break": 3
+      }
+    },
+    {
+      "name": "Goiana",
+      "email": "up202108044@g.uporto.pt",
+      "experience": 3,
+      "skills": [
+        "react",
+        "next",
+        "teaching",
+        "program",
+        "operations",
+        "github_actions"
+      ],
+      "preferences": {
+        "workshop_react_next_1": 2,
+        "escape_room": 3,
+        "workshop_react_next_2": 2,
+        "talk_visual_design": 5,
+        "panel_pi": 0,
+        "talk_chess": 4,
+        "workshop_github_actions": 1,
+        "coffee_break": 5
+      }
+    },
+    {
+      "name": "Guilherme Santos",
+      "email": "up202108674@g.uporto.pt",
+      "experience": 4,
+      "skills": [
+        "react",
+        "teaching",
+        "program",
+        "operations"
+      ],
+      "preferences": {
+        "workshop_react_next_1": 0,
+        "escape_room": 0,
+        "workshop_react_next_2": 0,
+        "talk_visual_design": 1,
+        "panel_pi": 4,
+        "talk_chess": 3,
+        "workshop_github_actions": 2,
+        "coffee_break": 1
+      }
+    }
+  ]
+}
