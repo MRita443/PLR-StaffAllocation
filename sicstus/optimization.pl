@@ -54,6 +54,7 @@ sum_activity_diversity([ActivityCol | RestCols], StaffExperience, TotalDiversity
     sum_activity_diversity(RestCols, StaffExperience, RestDiversity),
     TotalDiversity #= ActivityDiversity + RestDiversity.
 
+% calculate_activity_diversity(+ActivityColumn, +StaffExperience, -DiversityScore)
 calculate_activity_diversity(ActivityColumn, StaffExperience, DiversityScore) :-
     build_experience_terms(ActivityColumn, StaffExperience, ExperienceTerms),
 
@@ -64,17 +65,11 @@ calculate_activity_diversity(ActivityColumn, StaffExperience, DiversityScore) :-
     (NumAssigned #= 0) #=> (DiversityScore #= 0),
     (NumAssigned #> 0) #=> (DiversityScore #= MaxExperience - MinExperience).
 
+% build_experience_terms(+AllocationColumn, +StaffExperience, -ExperienceTerms)
 build_experience_terms([], [], []).
 build_experience_terms([AllocVar | RestAlloc], [Exp | RestExp], [Exp | RestFiltered]) :-
     AllocVar #= 1,
     build_experience_terms(RestAlloc, RestExp, RestFiltered).
 build_experience_terms([AllocVar | RestAlloc], [_ | RestExp], RestFiltered) :-
-    AllocVar #= 0,
+    AllocVar #= 0, % Filter experience terms for unassigned staff
     build_experience_terms(RestAlloc, RestExp, RestFiltered).
-
-% selRandomValue(+Var, +Rest, +BB0, -BB1)
-selRandomValue(Var, _, BB0, BB1):-
-    fd_set(Var, Set), fdset_to_list(Set, List),
-    random_member(Value, List),
-    ( first_bound(BB0, BB1), Var #= Value ;
-      later_bound(BB0, BB1), Var #\= Value ).

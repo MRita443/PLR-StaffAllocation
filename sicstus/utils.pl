@@ -1,5 +1,5 @@
 /** <module> General utility predicates. */
-:- module(utils, [writeln/1, pretty_print/1, intersection/3, print_allocations_by_day/3]).
+:- module(utils, [writeln/1, pretty_print/1, intersection/3, print_allocations_by_day/3, selRandomValue/4]).
 
 :- use_module(library(lists)).
 :- use_module(data_utils).
@@ -23,6 +23,13 @@ intersection([H | T], List2, [H | Intersection]) :-
     intersection(T, List2, Intersection).
 intersection([_ | T], List2, Intersection) :-
     intersection(T, List2, Intersection).
+
+% selRandomValue(+Var, +Rest, +BB0, -BB1)
+selRandomValue(Var, _, BB0, BB1):-
+    fd_set(Var, Set), fdset_to_list(Set, List),
+    random_member(Value, List),
+    ( first_bound(BB0, BB1), Var #= Value ;
+      later_bound(BB0, BB1), Var #\= Value ).
 
 % print_allocations_by_day(+StaffIDs, +ActivityIDs, +AllocationMatrix)
 print_allocations_by_day(StaffIDs, ActivityIDs, AllocationMatrix) :-
