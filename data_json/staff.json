@@ -11,17 +11,14 @@
         "operations"
       ],
       "preferences": {
-        "workshop_react_next_1": 1,
-        "workshop_react_next_2": 1,
-        "coffee_break_1": null,
-        "escape_room_1": 3,
-        "talk_visual_design": 5,
+        "coffee_break": null,
+        "escape_room": 3,
         "panel_pi": 0,
-        "talk_haskell": 4,
-        "escape_room_2": 3,
-        "escape_room_3": 3,
         "talk_chess": 3,
-        "talk_design_ai": 1
+        "talk_visual_design": 5,
+        "workshop_github_actions": 2,
+        "workshop_react_next_1": 1,
+        "workshop_react_next_2": 1
       }
     },
     {
@@ -34,17 +31,14 @@
         "operations"
       ],
       "preferences": {
-        "workshop_react_next_1": 0,
-        "workshop_react_next_2": 0,
-        "coffee_break_1": null,
-        "escape_room_1": 3,
-        "talk_visual_design": 2,
+        "coffee_break": null,
+        "escape_room": 3,
         "panel_pi": 5,
-        "talk_haskell": 0,
-        "escape_room_2": 3,
-        "escape_room_3": 3,
         "talk_chess": 4,
-        "talk_design_ai": 2
+        "talk_visual_design": 2,
+        "workshop_github_actions": 2,
+        "workshop_react_next_1": 0,
+        "workshop_react_next_2": 0
       }
     },
     {
@@ -57,17 +51,14 @@
         "github_actions"
       ],
       "preferences": {
-        "workshop_react_next_1": 2,
-        "workshop_react_next_2": 2,
-        "coffee_break_1": 4,
-        "escape_room_1": 4,
-        "talk_visual_design": 1,
+        "coffee_break": 4,
+        "escape_room": 4,
         "panel_pi": 5,
-        "talk_haskell": 3,
-        "escape_room_2": 4,
-        "escape_room_3": 4,
         "talk_chess": 4,
-        "talk_design_ai": 0
+        "talk_visual_design": 1,
+        "workshop_github_actions": 2,
+        "workshop_react_next_1": 2,
+        "workshop_react_next_2": 2
       }
     },
     {
@@ -80,17 +71,14 @@
         "github_actions"
       ],
       "preferences": {
-        "workshop_react_next_1": 3,
-        "workshop_react_next_2": 3,
-        "coffee_break_1": 3,
-        "escape_room_1": 2,
-        "talk_visual_design": 1,
+        "coffee_break": 3,
+        "escape_room": 2,
         "panel_pi": 2,
-        "talk_haskell": 1,
-        "escape_room_2": 2,
-        "escape_room_3": 2,
         "talk_chess": null,
-        "talk_design_ai": 3
+        "talk_visual_design": 1,
+        "workshop_github_actions": 4,
+        "workshop_react_next_1": 3,
+        "workshop_react_next_2": 3
       }
     },
     {
@@ -106,17 +94,14 @@
         "github_actions"
       ],
       "preferences": {
-        "workshop_react_next_1": 1,
-        "workshop_react_next_2": 1,
-        "coffee_break_1": 5,
-        "escape_room_1": 1,
-        "talk_visual_design": 2,
+        "coffee_break": 5,
+        "escape_room": 1,
         "panel_pi": 2,
-        "talk_haskell": 0,
-        "escape_room_2": 1,
-        "escape_room_3": 1,
         "talk_chess": 3,
-        "talk_design_ai": 1
+        "talk_visual_design": 2,
+        "workshop_github_actions": 3,
+        "workshop_react_next_1": 1,
+        "workshop_react_next_2": 1
       }
     },
     {
@@ -127,17 +112,14 @@
         "next"
       ],
       "preferences": {
-        "workshop_react_next_1": 0,
-        "workshop_react_next_2": 0,
-        "coffee_break_1": 0,
-        "escape_room_1": 0,
-        "talk_visual_design": 5,
+        "coffee_break": 0,
+        "escape_room": 0,
         "panel_pi": 0,
-        "talk_haskell": 0,
-        "escape_room_2": 0,
-        "escape_room_3": 0,
         "talk_chess": 1,
-        "talk_design_ai": 0
+        "talk_visual_design": 5,
+        "workshop_github_actions": 0,
+        "workshop_react_next_1": 0,
+        "workshop_react_next_2": 0
       }
     },
     {
@@ -151,17 +133,14 @@
         "github_actions"
       ],
       "preferences": {
-        "workshop_react_next_1": 0,
-        "workshop_react_next_2": 0,
-        "coffee_break_1": null,
-        "escape_room_1": 4,
-        "talk_visual_design": 4,
+        "coffee_break": null,
+        "escape_room": 4,
         "panel_pi": 5,
-        "talk_haskell": 2,
-        "escape_room_2": 4,
-        "escape_room_3": 4,
         "talk_chess": 0,
-        "talk_design_ai": 1
+        "talk_visual_design": 4,
+        "workshop_github_actions": 2,
+        "workshop_react_next_1": 0,
+        "workshop_react_next_2": 0
       }
     },
     {
@@ -174,17 +153,14 @@
         "program"
       ],
       "preferences": {
-        "workshop_react_next_1": 1,
-        "workshop_react_next_2": 1,
-        "coffee_break_1": 3,
-        "escape_room_1": 1,
-        "talk_visual_design": 5,
+        "coffee_break": 3,
+        "escape_room": 1,
         "panel_pi": 1,
-        "talk_haskell": 1,
-        "escape_room_2": 1,
-        "escape_room_3": 1,
         "talk_chess": 2,
-        "talk_design_ai": 4
+        "talk_visual_design": 5,
+        "workshop_github_actions": 3,
+        "workshop_react_next_1": 1,
+        "workshop_react_next_2": 1
       }
     },
     {
@@ -200,17 +176,14 @@
         "github_actions"
       ],
       "preferences": {
-        "workshop_react_next_1": 2,
-        "workshop_react_next_2": 2,
-        "coffee_break_1": 5,
-        "escape_room_1": 3,
-        "talk_visual_design": 5,
+        "coffee_break": 5,
+        "escape_room": 3,
         "panel_pi": 0,
-        "talk_haskell": 3,
-        "escape_room_2": 3,
-        "escape_room_3": 3,
         "talk_chess": 4,
-        "talk_design_ai": 3
+        "talk_visual_design": 5,
+        "workshop_github_actions": 1,
+        "workshop_react_next_1": 2,
+        "workshop_react_next_2": 2
       }
     },
     {
@@ -224,227 +197,14 @@
         "operations"
       ],
       "preferences": {
-        "workshop_react_next_1": 0,
-        "workshop_react_next_2": 0,
-        "coffee_break_1": 1,
-        "escape_room_1": 0,
-        "talk_visual_design": 1,
+        "coffee_break": 1,
+        "escape_room": 0,
         "panel_pi": 4,
-        "talk_haskell": 3,
-        "escape_room_2": 0,
-        "escape_room_3": 0,
         "talk_chess": 3,
-        "talk_design_ai": 1
-      }
-    },
-    {
-      "name": "Inês Gaspar",
-      "email": "up202108674@g.uporto.pt",
-      "experience": 3,
-      "skills": [
-        "teaching",
-        "program",
-        "operations"
-      ],
-      "preferences": {
-        "workshop_react_next_1": 1,
-        "workshop_react_next_2": 1,
-        "coffee_break_1": 5,
-        "escape_room_1": 2,
         "talk_visual_design": 1,
-        "panel_pi": 2,
-        "talk_haskell": 4,
-        "escape_room_2": 2,
-        "escape_room_3": 2,
-        "talk_chess": 0,
-        "talk_design_ai": 3
-      }
-    },
-    {
-      "name": "João Silva",
-      "email": "up202108674@g.uporto.pt",
-      "experience": 5,
-      "skills": [
-        "teaching",
-        "github_actions"
-      ],
-      "preferences": {
+        "workshop_github_actions": 2,
         "workshop_react_next_1": 0,
-        "workshop_react_next_2": 0,
-        "coffee_break_1": 0,
-        "escape_room_1": 0,
-        "talk_visual_design": 0,
-        "panel_pi": 0,
-        "talk_haskell": 5,
-        "escape_room_2": 0,
-        "escape_room_3": 0,
-        "talk_chess": 0,
-        "talk_design_ai": 3
-      }
-    },
-    {
-      "name": "João Torre Pereira",
-      "email": "up202108674@g.uporto.pt",
-      "experience": 4,
-      "skills": [
-        "program",
-        "operations",
-        "github_actions"
-      ],
-      "preferences": {
-        "workshop_react_next_1": 5,
-        "workshop_react_next_2": 5,
-        "coffee_break_1": 5,
-        "escape_room_1": 3,
-        "talk_visual_design": 3,
-        "panel_pi": 1,
-        "talk_haskell": 3,
-        "escape_room_2": 3,
-        "escape_room_3": 3,
-        "talk_chess": 4,
-        "talk_design_ai": 5
-      }
-    },
-    {
-      "name": "José Martins",
-      "email": "up202108674@g.uporto.pt",
-      "experience": 2,
-      "skills": [
-        "react",
-        "teaching",
-        "operations",
-        "github_actions"
-      ],
-      "preferences": {
-        "workshop_react_next_1": 1,
-        "workshop_react_next_2": 1,
-        "coffee_break_1": 1,
-        "escape_room_1": 4,
-        "talk_visual_design": 3,
-        "panel_pi": 2,
-        "talk_haskell": 1,
-        "escape_room_2": 4,
-        "escape_room_3": 4,
-        "talk_chess": 2,
-        "talk_design_ai": 5
-      }
-    },
-    {
-      "name": "José Sousa",
-      "email": "up202108674@g.uporto.pt",
-      "experience": 2,
-      "skills": [
-        "react",
-        "next",
-        "program",
-        "github_actions"
-      ],
-      "preferences": {
-        "workshop_react_next_1": 4,
-        "workshop_react_next_2": 4,
-        "coffee_break_1": null,
-        "escape_room_1": 1,
-        "talk_visual_design": 4,
-        "panel_pi": 0,
-        "talk_haskell": 2,
-        "escape_room_2": 1,
-        "escape_room_3": 1,
-        "talk_chess": null,
-        "talk_design_ai": 2
-      }
-    },
-    {
-      "name": "Luís Sousa",
-      "email": "up202108044@g.uporto.pt",
-      "experience": 4,
-      "skills": [
-        "next",
-        "operations",
-        "github_actions"
-      ],
-      "preferences": {
-        "workshop_react_next_1": 4,
-        "workshop_react_next_2": 4,
-        "coffee_break_1": 2,
-        "escape_room_1": 1,
-        "talk_visual_design": 3,
-        "panel_pi": 1,
-        "talk_haskell": 3,
-        "escape_room_2": 1,
-        "escape_room_3": 1,
-        "talk_chess": null,
-        "talk_design_ai": 2
-      }
-    },
-    {
-      "name": "Madalena",
-      "email": "up202108674@g.uporto.pt",
-      "experience": 4,
-      "skills": [
-        "react",
-        "next",
-        "operations",
-        "github_actions"
-      ],
-      "preferences": {
-        "workshop_react_next_1": 3,
-        "workshop_react_next_2": 3,
-        "coffee_break_1": 1,
-        "escape_room_1": 4,
-        "talk_visual_design": 5,
-        "panel_pi": 3,
-        "talk_haskell": 2,
-        "escape_room_2": 4,
-        "escape_room_3": 4,
-        "talk_chess": 0,
-        "talk_design_ai": 5
-      }
-    },
-    {
-      "name": "Marco Vilas Boas",
-      "email": "up202108044@g.uporto.pt",
-      "experience": 2,
-      "skills": [
-        "teaching"
-      ],
-      "preferences": {
-        "workshop_react_next_1": 3,
-        "workshop_react_next_2": 3,
-        "coffee_break_1": 1,
-        "escape_room_1": 2,
-        "talk_visual_design": 4,
-        "panel_pi": 3,
-        "talk_haskell": 3,
-        "escape_room_2": 2,
-        "escape_room_3": 2,
-        "talk_chess": 1,
-        "talk_design_ai": 2
-      }
-    },
-    {
-      "name": "Maria Rita Nogueira Lopes",
-      "email": "up202108674@g.uporto.pt",
-      "experience": 5,
-      "skills": [
-        "react",
-        "next",
-        "teaching",
-        "program",
-        "operations",
-        "github_actions"
-      ],
-      "preferences": {
-        "workshop_react_next_1": 5,
-        "workshop_react_next_2": 5,
-        "coffee_break_1": 5,
-        "escape_room_1": 5,
-        "talk_visual_design": 5,
-        "panel_pi": 5,
-        "talk_haskell": 5,
-        "escape_room_2": 5,
-        "escape_room_3": 5,
-        "talk_chess": 5,
-        "talk_design_ai": 5
+        "workshop_react_next_2": 0
       }
     }
   ]

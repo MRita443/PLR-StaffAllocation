@@ -1,7 +1,9 @@
 /** <module> General utility predicates. */
-:- module(utils, [writeln/1, pretty_print/1, intersection/3, print_allocations_by_day/3, selRandomValue/4]).
+:- module(utils, [writeln/1, pretty_print/1, intersection/3, print_allocations_by_day/3, selRandomValue/4, multiply_lists/3, max_nonzero_diff/3]).
 
 :- use_module(library(lists)).
+:- use_module(library(clpfd)).
+:- use_module(library(random)).
 :- use_module(data_utils).
 :- use_module('../data_pl/activities').
 
@@ -23,6 +25,23 @@ intersection([H | T], List2, [H | Intersection]) :-
     intersection(T, List2, Intersection).
 intersection([_ | T], List2, Intersection) :-
     intersection(T, List2, Intersection).
+
+% multiply_lists(+List1, +List2, -Result)
+multiply_lists([], [], []).
+multiply_lists([X|Xs], [Y|Ys], [Z|Zs]) :-
+    Z #= X * Y,
+    multiply_lists(Xs, Ys, Zs).
+
+% max_nonzero_diff(+X, +List, -MaxDiff)
+% max diff between X and non-zero elements in List
+max_nonzero_diff(_, [], 0).
+max_nonzero_diff(X, [Y|Ys], MaxDiff) :-
+    Diff #= abs(X - Y),
+    Y #\= 0 #<=> NonZero,
+    max_nonzero_diff(X, Ys, RestMaxDiff),
+    Diff #> RestMaxDiff #<=> Larger,
+    bool_and([NonZero, Larger], Keep),
+    if_then_else(Keep, Diff, RestMaxDiff, MaxDiff).
 
 % selRandomValue(+Var, +Rest, +BB0, -BB1)
 selRandomValue(Var, _, BB0, BB1):-

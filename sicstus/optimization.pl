@@ -3,7 +3,6 @@
 
 :- use_module(library(clpfd)).
 :- use_module(library(lists), [append/2, transpose/2]).
-:- use_module(library(random)).
 
 :- use_module(data_utils).
 :- use_module(utils).
@@ -56,14 +55,14 @@ sum_activity_diversity([ActivityCol | RestCols], StaffExperience, TotalDiversity
 
 % calculate_activity_diversity(+ActivityColumn, +StaffExperience, -DiversityScore)
 calculate_activity_diversity(ActivityColumn, StaffExperience, DiversityScore) :-
-    build_experience_terms(ActivityColumn, StaffExperience, ExperienceTerms),
+    multiply_lists(ActivityColumn, StaffExperience, ExperienceTerms), % Zero out unassigned staff
 
     maximum(MaxExperience, ExperienceTerms),
-    minimum(MinExperience, ExperienceTerms),
+    max_nonzero_diff(MaxExperience, StaffExperience, DiversityDiff),
 
     sum(ActivityColumn, #=, NumAssigned),
     (NumAssigned #= 0) #=> (DiversityScore #= 0),
-    (NumAssigned #> 0) #=> (DiversityScore #= MaxExperience - MinExperience).
+    (NumAssigned #> 0) #=> (DiversityScore #= DiversityDiff).
 
 % build_experience_terms(+AllocationColumn, +StaffExperience, -ExperienceTerms)
 build_experience_terms([], [], []).
